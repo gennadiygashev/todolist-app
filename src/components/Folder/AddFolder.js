@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 
-export default function AddFolder(props) {
+export default function AddFolder({ createNewFolder }) {
   
   const [label, setLabel] = useState('')
 
@@ -14,7 +14,7 @@ export default function AddFolder(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    props.onItemAdded(label);
+    createNewFolder(label);
     setLabel('')
   };
 
@@ -25,7 +25,7 @@ export default function AddFolder(props) {
           <form onSubmit={onSubmit}>
             <TextField 
               id="standard-basic" 
-              label={props.text} 
+              label='Новая папка' 
               type="text" 
               onChange={onLabelChange}
               value={label}

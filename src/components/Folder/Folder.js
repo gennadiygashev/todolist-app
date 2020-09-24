@@ -1,13 +1,8 @@
-import React, { useState } from 'react'
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import React from 'react'
 import { Link } from 'react-router-dom'
 import FolderIcon from '@material-ui/icons/Folder';
-import { ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core/'
-import ChangeFolder from '../ChangeFolder/ChangeFolder'
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core/'
+import ChangeFolder from './ChangeFolder'
 
 
 export default function Folder(props) {
@@ -26,9 +21,8 @@ export default function Folder(props) {
           deleteFolder={props.deleteFolder} 
           folderID={props.folderID} 
           name={props.name} 
-          changeTitle={props.changeTitle}
+          changeFolder={props.changeFolder}
           folderColor={props.folderColor}
-          changeColor={props.changeColor}
         />
       </ListItem>
     </> 

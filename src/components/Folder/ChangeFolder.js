@@ -3,13 +3,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
 import Radio from '@material-ui/core/Radio';
 
 export default function ChangeFolder(props) {
@@ -38,12 +34,12 @@ export default function ChangeFolder(props) {
             label="Изменить заголовок"
             fullWidth
             defaultValue={props.name}
-            onChange={(event) => props.changeTitle(event.target.value, props.folderID)}
+            onChange={(event) => props.changeFolder(event.target.value, props.folderID, 'name')}
           />
           <div>
             <Radio
               checked={props.folderColor === 'default'}
-              onChange={() => props.changeColor('default', props.folderID)}
+              onChange={() => props.changeFolder('default', props.folderID, 'folderColor')}
               value="default"
               color="default"
               name="radio-button-demo"
@@ -51,7 +47,7 @@ export default function ChangeFolder(props) {
             />
             <Radio
               checked={props.folderColor === 'secondary'}
-              onChange={() => props.changeColor('secondary', props.folderID)}
+              onChange={() => props.changeFolder('secondary', props.folderID, 'folderColor')}
               value="secondary"
               name="radio-button-demo"
               color="secondary"
@@ -59,7 +55,7 @@ export default function ChangeFolder(props) {
             />
             <Radio
               checked={props.folderColor === 'primary'}
-              onChange={() => props.changeColor('primary', props.folderID)}
+              onChange={() => props.changeFolder('primary', props.folderID, 'folderColor')}
               value="primary"
               color="primary"
               name="radio-button-demo"

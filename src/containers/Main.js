@@ -1,8 +1,8 @@
 // Контейнер для отображения элементов карточек с задачами
 import React, { useState, useEffect } from 'react'
-import Card from '../../components/Card/Card'
-import AddCard from '../../components/UI/AddCard/AddCard'
-import Axios from '../../axios/axios-folders'
+import Card from '../components/Card/Card'
+import AddCard from '../components/Card/AddCard'
+import Axios from '../axios/axios-folders'
 import Box from '@material-ui/core/Box';
 
 export default function Main(props) {

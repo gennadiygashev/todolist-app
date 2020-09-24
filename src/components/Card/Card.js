@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import Task from '../UI/Task/Task'
-import AddTask from '../UI/AddTask/AddTask'
+import Task from '../Task/Task'
+import AddTask from '../Task/AddTask'
 import Axios from '../../axios/axios-folders';
-import DeleteCard from '../UI/DeleteCard/DeleteCard';
+import DeleteCard from './DeleteCard';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import ChangeCard from '../UI/ChangeCard/ChangeCard'
+import ChangeCard from './ChangeCard'
 
 export default function CardT(props) {
 

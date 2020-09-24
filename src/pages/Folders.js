@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Menu from '../containers/Menu/Menu.js'
-import Main from '../containers/Main/Main.js'
+import Menu from '../containers/Menu.js'
+import Main from '../containers/Main.js'
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
