@@ -1,9 +1,9 @@
-import Axios from '../../axios/axios-folders'
+import Axios from '../../../axios/axios-folders'
 import { 
   FETCH_MENULIST_STARTED,
   FETCH_MENULIST_SUCCESS,
   FETCH_MENULIST_FAILURE
-} from './actionTypes'
+} from '../actionTypes'
 
 export function fetchMenuList() {
   return async dispatch => {

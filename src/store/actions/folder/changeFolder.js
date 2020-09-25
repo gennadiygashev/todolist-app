@@ -1,5 +1,5 @@
-import Axios from '../../axios/axios-folders'
-import { CHANGE_FOLDER } from './actionTypes'
+import Axios from '../../../axios/axios-folders'
+import { CHANGE_FOLDER } from '../actionTypes'
 
 export function changeFolder(value, folderID, typeAction) {
   if (typeAction === 'name') {

@@ -162,12 +162,14 @@ export default function CardT(props) {
         action={
           <>
             <ChangeCard 
-              changeTitle={props.changeTitle}
+              changeCardTitle={props.changeCardTitle}
               cardID={props.cardID}
               title={props.title}
+              currentFolder={props.currentFolder}
             />
             <DeleteCard 
               deleteCard={props.onDeleteCard}
+              currentFolder={props.currentFolder}
               cardID={props.cardID}
             />
           </>

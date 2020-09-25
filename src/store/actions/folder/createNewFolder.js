@@ -1,12 +1,13 @@
-import Axios from '../../axios/axios-folders'
-import { CREATE_NEW_FOLDER } from './actionTypes'
+import Axios from '../../../axios/axios-folders'
+import { CREATE_NEW_FOLDER } from '../actionTypes'
 
 const createFolder = (name) => {
   return {
     name,
     key: '',
     folderID: '',
-    folderColor: 'default'
+    folderColor: 'default',
+    cards: '',
   }
 }
 

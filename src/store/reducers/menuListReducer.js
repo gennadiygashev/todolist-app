@@ -1,7 +1,7 @@
 const initialState = {
   folders: [],
   loading: false,
-  error: null
+  error: null,
 }
 
 const menuListReducer = (state = initialState, action) => {

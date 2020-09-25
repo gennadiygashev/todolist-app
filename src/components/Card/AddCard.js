@@ -14,11 +14,10 @@ const useStyles = makeStyles({
   }
 });
 
-
-const AddCard = ({ addCard }) => {
+const AddCard = ({ addNewCard, currentFolder }) => {
   const classes = useStyles();
   return (
-    <Box onClick={() => addCard()} className={classes.root}>
+    <Box onClick={() => addNewCard(currentFolder)} className={classes.root}>
       <Grid
         container
         direction="row"

@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import { ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core/'
 import AddFolder from '../components/Folder/AddFolder'
 import Folder from '../components/Folder/Folder'
-import { fetchMenuList } from '../store/actions/fetchMenuList'
-import { addNewFolder } from '../store/actions/createNewFolder'
-import { deleteFolder } from '../store/actions/deleteFolder'
-import { changeFolder } from '../store/actions/changeFolder'
+import { fetchMenuList } from '../store/actions/folder/fetchMenuList'
+import { addNewFolder } from '../store/actions/folder/createNewFolder'
+import { deleteFolder } from '../store/actions/folder/deleteFolder'
+import { changeFolder } from '../store/actions/folder/changeFolder'
+import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
+import { ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core/'
+
 
 function MenuList({ folders, fetchMenuList, addNewFolder, deleteFolder, changeFolder }) {
   

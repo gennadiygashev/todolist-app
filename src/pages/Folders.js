@@ -147,7 +147,7 @@ export default function Folders() {
         </Drawer>
         <main className={classes.content} style={{ padding: '0'}} >
           <div className={classes.toolbar} />
-          <Route path='/:id' render={({ match }) => <Main folderID={match.params.id} key={match.params.id} />} />
+          <Route path='/:id' render={({ match }) => <Main currentFolder={match.params.id} key={match.params.id} />} />
         </main>
       </Router>
     </div>

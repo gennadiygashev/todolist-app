@@ -35,7 +35,7 @@ export default function ChangeCard(props) {
             label="Заголовок"
             fullWidth
             defaultValue={props.title}
-            onChange={(event) => props.changeTitle(event.target.value, props.cardID)}
+            onChange={(event) => props.changeCardTitle(props.currentFolder, props.cardID, event.target.value)}
           />
         </DialogContent>
         <DialogActions>
