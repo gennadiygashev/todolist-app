@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 
-export default function ChangeFolder(props) {
+export default function ChangeFolder({ folderID, changeFolder, folderColor, name, deleteFolder }) {
 
   const [open, setOpen] = useState(false);
 
@@ -33,36 +33,36 @@ export default function ChangeFolder(props) {
             id="name"
             label="Изменить заголовок"
             fullWidth
-            defaultValue={props.name}
-            onChange={(event) => props.changeFolder(event.target.value, props.folderID, 'name')}
+            defaultValue={name}
+            onChange={(event) => changeFolder(event.target.value, folderID, 'name')}
           />
           <div>
             <Radio
-              checked={props.folderColor === 'default'}
-              onChange={() => props.changeFolder('default', props.folderID, 'folderColor')}
+              checked={folderColor === 'default'}
+              onChange={() => changeFolder('default', folderID, 'folderColor')}
               value="default"
               color="default"
               name="radio-button-demo"
               inputProps={{ 'aria-label': 'A' }}
             />
             <Radio
-              checked={props.folderColor === 'secondary'}
-              onChange={() => props.changeFolder('secondary', props.folderID, 'folderColor')}
+              checked={folderColor === 'secondary'}
+              onChange={() => changeFolder('secondary', folderID, 'folderColor')}
               value="secondary"
               name="radio-button-demo"
               color="secondary"
               inputProps={{ 'aria-label': 'B' }}
             />
             <Radio
-              checked={props.folderColor === 'primary'}
-              onChange={() => props.changeFolder('primary', props.folderID, 'folderColor')}
+              checked={folderColor === 'primary'}
+              onChange={() => changeFolder('primary', folderID, 'folderColor')}
               value="primary"
               color="primary"
               name="radio-button-demo"
               inputProps={{ 'aria-label': 'C' }}
             />
           </div>
-          <Button onClick={() => props.deleteFolder(props.folderID)} variant="contained" color='secondary' >
+          <Button onClick={() => deleteFolder(folderID)} variant="contained" color='secondary' >
             Удалить папку
           </Button>
         </DialogContent>
@@ -70,3 +70,4 @@ export default function ChangeFolder(props) {
     </>
   )
 }
+
