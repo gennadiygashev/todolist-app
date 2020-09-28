@@ -1,20 +1,18 @@
-// Компонент добавления новой задачи
 import React, { useState } from 'react'
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 
-export default function AddTask(props) {
+import { TextField, Grid } from '@material-ui/core/';
 
-  const [label, setLabel] = useState('')
+export default function AddTask({ addNewTask, currentFolder, cardID }) {
+  const [title, setTitle] = useState('')
 
   const onLabelChange = (e) => {
-    setLabel(e.target.value)
+    setTitle(e.target.value)
   }
 
   const onSubmit = (e) => {
     e.preventDefault();
-    props.onItemAdded(label);
-    setLabel('')
+    addNewTask(currentFolder, cardID, title);
+    setTitle('')
   };
 
   return(
@@ -23,11 +21,11 @@ export default function AddTask(props) {
         <Grid item>
           <form onSubmit={onSubmit}>
             <TextField 
-              id="standard-basic" 
-              label={props.text} 
+              id={`addTask${cardID}`} 
+              label='Добавить задачу'
               type="text" 
               onChange={onLabelChange}
-              value={label}
+              value={title}
               onSubmit={onSubmit}
               size='small'
             />

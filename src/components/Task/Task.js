@@ -1,12 +1,9 @@
-// Чекбокс задач
 import React from 'react'
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Grid from '@material-ui/core/Grid';
+
+import { FormControlLabel, Checkbox, IconButton, Grid } from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   label: {
@@ -15,7 +12,7 @@ const useStyles = makeStyles({
   }
 })
 
-export default function Task(props) {
+export default function Task({ title, currentFolder, cardID, taskID, done, important, changeCardsTask, taskData, deleteTask }) {
   const classes = useStyles()
   return (
     <Grid
@@ -28,27 +25,27 @@ export default function Task(props) {
         <FormControlLabel
           control={
             <Checkbox
-              checked={props.done}
-              id={props.taskID}
-              onChange={() => props.onComplete(props.taskID)}
-              color={props.important ? 'secondary' : 'primary'}
+              checked={done}
+              id={taskID}
+              onChange={() => changeCardsTask(taskData, currentFolder, cardID, taskID, 'done')}
+              color={important ? 'secondary' : 'primary'}
               inputProps={{ 'aria-label': 'primary checkbox' }}
             />
           }
-          label={props.name}
-          classes={props.important ? {label: classes.label} : ''}
+          label={title}
+          classes={important ? {label: classes.label} : ''}
         />
       </Grid>
       <Grid item>
         <IconButton 
           color="secondary"
-          onClick={() => props.onDeleted(props.taskID)}
+          onClick={() => deleteTask(currentFolder, cardID, taskID)}
         >
           <DeleteIcon />
         </IconButton>
         <IconButton 
           color="primary"
-          onClick={() => props.onToggleImportant(props.taskID)}
+          onClick={() => changeCardsTask(taskData, currentFolder, cardID, taskID, 'important')}
         >
           <BookmarkIcon />
         </IconButton>
