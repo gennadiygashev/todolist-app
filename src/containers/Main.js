@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 function Main({ currentFolder, cards, addNewCard, fetchCardList, deleteCard, changeCardTitle, addNewTask, changeCardsTask, deleteTask }) {
   useEffect(() => {
     fetchCardList(currentFolder)
-  })
+  }, [])
 
   return (
     <Box display="flex" flexDirection="row" flexWrap="nowrap" overflow='scroll'>

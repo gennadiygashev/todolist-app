@@ -13,7 +13,7 @@ function MenuList({ folders, fetchMenuList, addNewFolder, deleteFolder, changeFo
   
   useEffect(() => {
     fetchMenuList()
-  })
+  }, [])
 
   return(
     <>
