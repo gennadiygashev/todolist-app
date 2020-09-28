@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import FolderIcon from '@material-ui/icons/Folder';
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core/'
+
 import ChangeFolder from './ChangeFolder'
 
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core/'
+import FolderIcon from '@material-ui/icons/Folder';
 
 export default function Folder({ folderID, folderColor, name, deleteFolder, changeFolder }) {
   return(

@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+
 import AddFolder from '../components/Folder/AddFolder'
 import Folder from '../components/Folder/Folder'
-import { fetchMenuList } from '../store/actions/folder/fetchMenuList'
-import { addNewFolder } from '../store/actions/folder/createNewFolder'
-import { deleteFolder } from '../store/actions/folder/deleteFolder'
-import { changeFolder } from '../store/actions/folder/changeFolder'
-import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import { ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core/'
 
+import { fetchMenuList, addNewFolder, deleteFolder, changeFolder } from '../store/actions'
+
+import { ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core/'
+import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 
 function MenuList({ folders, fetchMenuList, addNewFolder, deleteFolder, changeFolder }) {
   
   useEffect(() => {
     fetchMenuList()
-  }, [])
+  })
 
   return(
     <>
@@ -49,7 +48,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  folders: state.menuList.folders
+  folders: state.menu.folders
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuList)

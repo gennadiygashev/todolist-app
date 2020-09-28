@@ -9,7 +9,7 @@ export function fetchCardList(currentFolder) {
   return async dispatch => {
     dispatch(fetchCardListStarted())
     try {      
-      const response = await Axios.get(`/folders/${currentFolder}/cards.json`)
+      const response = await Axios.get(`/cards/${currentFolder}.json`)
       const cards = []
       Object.values(response.data).forEach((card) => {
         cards.push(card)

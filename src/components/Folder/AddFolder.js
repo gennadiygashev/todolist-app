@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 
+import { TextField, Grid } from '@material-ui/core/';
 
 export default function AddFolder({ createNewFolder }) {
-  
   const [label, setLabel] = useState('')
 
   const onLabelChange = (e) => {
@@ -23,7 +21,7 @@ export default function AddFolder({ createNewFolder }) {
         <Grid item>
           <form onSubmit={onSubmit}>
             <TextField 
-              id="standard-basic" 
+              id="addFolder" 
               label='Новая папка' 
               type="text" 
               onChange={onLabelChange}

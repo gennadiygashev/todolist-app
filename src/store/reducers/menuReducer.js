@@ -4,7 +4,14 @@ const initialState = {
   error: null,
 }
 
-const menuListReducer = (state = initialState, action) => {
+const menuReducer = (state = initialState, action) => {
+  
+  const folderIndex = (folderID) => {
+    return (
+      state.folders.findIndex((el) => el.folderID === folderID)
+    )
+  }  
+
   switch (action.type) {
     case 'FETCH_MENULIST_STARTED':
       return {
@@ -24,26 +31,24 @@ const menuListReducer = (state = initialState, action) => {
         error: action.error
       }
     case 'DELETE_FOLDER':
-      const idxA = state.folders.findIndex((el) => el.folderID === action.folderID);
       return {
         ...state,
         folders: [
-          ...state.folders.slice(0, idxA),
-          ...state.folders.slice(idxA + 1)
+          ...state.folders.slice(0, folderIndex(action.folderID)),
+          ...state.folders.slice(folderIndex(action.folderID) + 1)
         ]
       }
     case 'CHANGE_FOLDER':
-      const idx = state.folders.findIndex((el) => el.folderID === action.folderID);
-      const oldItem = state.folders[idx];
+      const oldItem = state.folders[folderIndex(action.folderID)];
       const newItem = {...oldItem,
         [action.typeAction]: action.value
       }  
       return {
         ...state,
         folders: [
-          ...state.folders.slice(0, idx),
+          ...state.folders.slice(0, folderIndex(action.folderID)),
           newItem,
-          ...state.folders.slice(idx + 1)  
+          ...state.folders.slice(folderIndex(action.folderID) + 1)  
         ]
       }
     case 'CREATE_NEW_FOLDER':
@@ -59,4 +64,4 @@ const menuListReducer = (state = initialState, action) => {
   }
 }
 
-export default menuListReducer
+export default menuReducer

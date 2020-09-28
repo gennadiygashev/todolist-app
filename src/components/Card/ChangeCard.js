@@ -1,16 +1,9 @@
 import React, { useState } from 'react'
-import IconButton from '@material-ui/core/IconButton';
+
+import { IconButton, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@material-ui/core/';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
 
-
-
-export default function ChangeCard(props) {
+export default function ChangeCard({ title, changeCardTitle, currentFolder, cardID }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -34,8 +27,8 @@ export default function ChangeCard(props) {
             id="name"
             label="Заголовок"
             fullWidth
-            defaultValue={props.title}
-            onChange={(event) => props.changeCardTitle(props.currentFolder, props.cardID, event.target.value)}
+            defaultValue={title}
+            onChange={(event) => changeCardTitle(currentFolder, cardID, event.target.value)}
           />
         </DialogContent>
         <DialogActions>

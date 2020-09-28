@@ -6,8 +6,7 @@ const createFolder = (name) => {
     name,
     key: '',
     folderID: '',
-    folderColor: 'default',
-    cards: '',
+    folderColor: 'action',
   }
 }
 
@@ -20,8 +19,7 @@ export function addNewFolder(name) {
         const folderKey = ((Object.values(res.data))[0])
         newFolder.folderID = folderKey
         newFolder.key = folderKey
-        Axios.patch(`/folders/${folderKey}.json`, {'key': folderKey})
-        Axios.patch(`/folders/${folderKey}.json`, {'folderID': folderKey})
+        Axios.patch(`/folders/${folderKey}.json`, {'key': folderKey, 'folderID': folderKey})
       })  
       dispatch(createNewFolder(newFolder))  
     } catch (e) {

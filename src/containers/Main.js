@@ -1,23 +1,23 @@
 import React, { useEffect } from 'react'
+import { connect } from 'react-redux';
+
 import Card from '../components/Card/Card'
 import AddCard from '../components/Card/AddCard'
-import Box from '@material-ui/core/Box';
-import { connect } from 'react-redux';
-import { addNewCard } from '../store/actions/card/createNewCard'
-import { fetchCardList } from '../store/actions/card/fetchCardList'
-import { deleteCard } from '../store/actions/card/deleteCard'
-import { changeCardTitle } from '../store/actions/card/changeCardTitle'
 
-function Main({ currentFolder, cards, addNewCard, fetchCardList, deleteCard, changeCardTitle }) {
+import { addNewCard, fetchCardList, deleteCard, changeCardTitle, addNewTask, changeCardsTask, deleteTask } from '../store/actions'
+
+import Box from '@material-ui/core/Box';
+
+function Main({ currentFolder, cards, addNewCard, fetchCardList, deleteCard, changeCardTitle, addNewTask, changeCardsTask, deleteTask }) {
   useEffect(() => {
     fetchCardList(currentFolder)
-  }, [])
+  })
 
   return (
     <Box display="flex" flexDirection="row" flexWrap="nowrap" overflow='scroll'>
       {cards.map((card) => {
         return(
-          <Box p={1} minWidth='25%' maxWidth='25%' minHeight='85vh' borderRight={1} borderColor="paper" >
+          <Box p={1} minWidth='25%' maxWidth='25%' minHeight='85vh' borderRight={1} borderColor="paper">
             <Card 
               key={card.cardID} 
               cardID={card.cardID}
@@ -25,6 +25,10 @@ function Main({ currentFolder, cards, addNewCard, fetchCardList, deleteCard, cha
               title={card.title}
               onDeleteCard={deleteCard}
               changeCardTitle={changeCardTitle}
+              tasks={card.tasks}
+              addNewTask={addNewTask}
+              changeCardsTask={changeCardsTask} 
+              deleteTask={deleteTask}
             />
           </Box>
         )
@@ -44,10 +48,13 @@ const mapDispatchToProps = dispatch => ({
   addNewCard: (currentFolder) => dispatch(addNewCard(currentFolder)),
   deleteCard: (currentFolder, cardID) => dispatch(deleteCard(currentFolder, cardID)),
   changeCardTitle: (currentFolder, cardID, value) => dispatch(changeCardTitle(currentFolder, cardID, value)),
+  addNewTask: (currentFolder, cardID, title) => dispatch(addNewTask(currentFolder, cardID, title)),
+  deleteTask: (currentFolder, cardID, taskID) => dispatch(deleteTask(currentFolder, cardID, taskID)),
+  changeCardsTask: (taskData, currentFolder, cardID, taskID, typeAction) => dispatch(changeCardsTask(taskData, currentFolder, cardID, taskID, typeAction)),
 })
 
 const mapStateToProps = (state) => ({
-  cards: state.cardList.cards
+  cards: state.main.cards
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

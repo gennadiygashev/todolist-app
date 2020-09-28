@@ -1,15 +1,9 @@
 import React, { useState } from 'react'
-import IconButton from '@material-ui/core/IconButton';
+
+import { IconButton, TextField, Dialog, DialogContent, DialogTitle, Button, Radio } from '@material-ui/core/';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import Radio from '@material-ui/core/Radio';
 
 export default function ChangeFolder({ folderID, changeFolder, folderColor, name, deleteFolder }) {
-
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -38,9 +32,9 @@ export default function ChangeFolder({ folderID, changeFolder, folderColor, name
           />
           <div>
             <Radio
-              checked={folderColor === 'default'}
-              onChange={() => changeFolder('default', folderID, 'folderColor')}
-              value="default"
+              checked={folderColor === 'action'}
+              onChange={() => changeFolder('action', folderID, 'folderColor')}
+              value="action"
               color="default"
               name="radio-button-demo"
               inputProps={{ 'aria-label': 'A' }}
@@ -64,6 +58,9 @@ export default function ChangeFolder({ folderID, changeFolder, folderColor, name
           </div>
           <Button onClick={() => deleteFolder(folderID)} variant="contained" color='secondary' >
             Удалить папку
+          </Button>
+          <Button onClick={() => handleClose()} variant="contained" color='primary' >
+            Готово
           </Button>
         </DialogContent>
       </Dialog>

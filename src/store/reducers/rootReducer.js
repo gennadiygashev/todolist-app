@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import menuListReducer from './menuListReducer'
-import cardListReducer from './cardListReducer'
+import menuReducer from './menuReducer'
+import mainReducer from './mainReducer'
 
 export default combineReducers({
-  menuList: menuListReducer,
-  cardList: cardListReducer
+  menu: menuReducer,
+  main: mainReducer,
 })
