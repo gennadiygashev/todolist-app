@@ -32,7 +32,7 @@ export default function ChangeCard({ title, changeCardTitle, currentFolder, card
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} variant="contained" color="primary">
+          <Button onClick={() => handleClose()} variant="contained" color="primary">
             Готово
           </Button>
         </DialogActions>

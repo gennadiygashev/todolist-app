@@ -10,7 +10,7 @@ import { CardHeader, CardContent, Box } from '@material-ui/core/';
 
 export default function CardSection({ cardID, currentFolder, title, onDeleteCard, changeCardTitle, tasks, addNewTask, changeCardsTask, deleteTask }) {
   const TaskList = () => {
-    if (tasks === false || tasks === undefined) {
+    if (tasks === false || tasks === undefined || tasks.length === 0) {
       return <h1>Poka Zadach net</h1>
     }
     return (

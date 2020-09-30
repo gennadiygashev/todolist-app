@@ -10,12 +10,12 @@ export default function Folder({ folderID, folderColor, name, deleteFolder, chan
   return(
     <>
       <ListItem button key={folderID} >
-        <Link to={`/${folderID}`}>
+        <Link to={`/folders/${folderID}`}>
           <ListItemIcon>
             <FolderIcon color={folderColor} />
           </ListItemIcon>
         </Link>
-        <Link to={`/${folderID}`}>
+        <Link to={`/folders/${folderID}`}>
           <ListItemText primary={name} />
         </Link>
         <ChangeFolder 

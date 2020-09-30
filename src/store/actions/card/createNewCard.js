@@ -3,7 +3,7 @@ import { CREATE_NEW_CARD } from '../actionTypes'
 
 const createCard = () => {
   return {
-    title: 'Hello World',
+    title: 'Card',
     tasks: false
   }
 }

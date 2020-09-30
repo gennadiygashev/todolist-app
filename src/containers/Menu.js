@@ -3,21 +3,23 @@ import { connect } from 'react-redux'
 
 import AddFolder from '../components/Folder/AddFolder'
 import Folder from '../components/Folder/Folder'
+import EmptyFolderList from '../components/Folder/EmptyFolderList'
 
 import { fetchMenuList, addNewFolder, deleteFolder, changeFolder } from '../store/actions'
 
 import { ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core/'
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 
-function MenuList({ folders, fetchMenuList, addNewFolder, deleteFolder, changeFolder }) {
-  
-  useEffect(() => {
-    fetchMenuList()
-  }, [])
+function MenuList({ folders, fetchMenuList, addNewFolder, deleteFolder, changeFolder, loading }) {
 
-  return(
-    <>
-      {folders.map((folder) => (
+  const FoldersList = () => {
+    if (folders === false || folders === undefined || folders.length === 0) {
+      return (
+        <EmptyFolderList/>
+      )
+    }
+    return (
+      folders.map((folder) => (
         <Folder 
           name={folder.name}
           folderID={folder.folderID}
@@ -26,7 +28,17 @@ function MenuList({ folders, fetchMenuList, addNewFolder, deleteFolder, changeFo
           deleteFolder={deleteFolder}
           changeFolder={changeFolder}
         />
-      ))}
+      ))
+    )
+  }
+  
+  useEffect(() => {
+    fetchMenuList()
+  }, [])
+
+  return(
+    <>
+      <FoldersList />
       <Divider />
       <ListItem>
         <ListItemIcon><CreateNewFolderIcon /></ListItemIcon>
@@ -48,7 +60,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  folders: state.menu.folders
+  folders: state.menu.folders,
+  loading: state.menu.loading
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuList)

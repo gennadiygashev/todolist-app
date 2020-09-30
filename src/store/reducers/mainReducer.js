@@ -1,5 +1,7 @@
 const initialState = {
-  cards: []
+  cards: [],
+  loading: true,
+  error: null
 }
 
 const mainReducer = (state = initialState, action) => {
@@ -11,11 +13,11 @@ const mainReducer = (state = initialState, action) => {
   }  
 
   const cardWithTaskChanges = (taskID, newTaskArr, cardID) => {
-    const newTask = new Object()
+    const newTask = {}
     newTask[taskID] = newTaskArr
     const oldCard = state.cards[cardIndex(cardID)]
     const newCard = {...oldCard,
-      ['tasks']: Object.assign(oldCard.tasks, newTask)
+      'tasks': Object.assign(oldCard.tasks, newTask)
     }
     return newCard
   }
@@ -24,7 +26,7 @@ const mainReducer = (state = initialState, action) => {
     const oldCard = state.cards[cardIndex(cardID)]
     const taskIndex = Object.values(oldCard.tasks).findIndex((el) => el.taskID === taskID)
     const newCard = {...oldCard,
-      ['tasks']: [
+      'tasks': [
         ...Object.values(oldCard.tasks).slice(0, taskIndex),
         ...Object.values(oldCard.tasks).slice(taskIndex + 1)
       ]
@@ -35,8 +37,7 @@ const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_CARDLIST_STARTED':
       return {
-        ...state,
-        loading: true
+        ...state
       }
     case 'FETCH_CARDLIST_SUCCESS':
       return {
@@ -46,7 +47,7 @@ const mainReducer = (state = initialState, action) => {
       }
     case 'FETCH_CARDLIST_FAILURE':
       return {
-        ...state,
+        cards: [],
         loading: false,
         error: action.error
       }
@@ -69,7 +70,7 @@ const mainReducer = (state = initialState, action) => {
     case 'CHANGE_CARD_TITLE': 
       const oldCard = state.cards[cardIndex(action.cardID)]
       const newCard = {...oldCard,
-        ['title']: action.value
+        'title': action.value
       }  
       return {
         ...state,

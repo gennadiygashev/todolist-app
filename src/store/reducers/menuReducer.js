@@ -39,15 +39,15 @@ const menuReducer = (state = initialState, action) => {
         ]
       }
     case 'CHANGE_FOLDER':
-      const oldItem = state.folders[folderIndex(action.folderID)];
-      const newItem = {...oldItem,
+      const oldFolder = state.folders[folderIndex(action.folderID)];
+      const newFolder = {...oldFolder,
         [action.typeAction]: action.value
       }  
       return {
         ...state,
         folders: [
           ...state.folders.slice(0, folderIndex(action.folderID)),
-          newItem,
+          newFolder,
           ...state.folders.slice(folderIndex(action.folderID) + 1)  
         ]
       }
