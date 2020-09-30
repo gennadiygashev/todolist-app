@@ -1,4 +1,6 @@
-const initialState = {
+import { ICard, IMainInitialState, ITask } from './../../interfaces'
+
+const initialState: IMainInitialState = {
   cards: [],
   loading: true,
   error: null
@@ -6,26 +8,26 @@ const initialState = {
 
 const mainReducer = (state = initialState, action: any) => {
   
-  const cardIndex = (cardID: any): any => {
+  const cardIndex = (cardID: string): number => {
     return (
-      state.cards.findIndex((el: any) => el.cardID === cardID)
+      state.cards.findIndex((el: ICard) => el.cardID === cardID)
     )
   }  
 
-  const cardWithTaskChanges = (taskID: any, newTaskArr: any, cardID: any) => {
+  const cardWithTaskChanges = (taskID: string, newTaskArr: ITask, cardID: any) => {
     const newTask: any = {}
     newTask[taskID] = newTaskArr
-    const oldCard: any = state.cards[cardIndex(cardID)]
-    const newCard = {...oldCard,
+    const oldCard: ICard = state.cards[cardIndex(cardID)]
+    const newCard: ICard = {...oldCard,
       'tasks': Object.assign(oldCard.tasks, newTask)
     }
     return newCard
   }
 
-  const deleteTaskOnCard = (taskID: any, cardID: any) => {
-    const oldCard: any = state.cards[cardIndex(cardID)]
-    const taskIndex = Object.values(oldCard.tasks).findIndex((el: any) => el.taskID === taskID)
-    const newCard: any = {...oldCard,
+  const deleteTaskOnCard = (taskID: string, cardID: string) => {
+    const oldCard: ICard = state.cards[cardIndex(cardID)]
+    const taskIndex = Object.values(oldCard.tasks).findIndex((el: ITask) => el.taskID === taskID)
+    const newCard: ICard = {...oldCard,
       'tasks': [
         ...Object.values(oldCard.tasks).slice(0, taskIndex),
         ...Object.values(oldCard.tasks).slice(taskIndex + 1)
@@ -68,8 +70,8 @@ const mainReducer = (state = initialState, action: any) => {
         ]
       } 
     case 'CHANGE_CARD_TITLE': 
-      const oldCard: any = state.cards[cardIndex(action.cardID)]
-      const newCard = {...oldCard,
+      const oldCard: ICard = state.cards[cardIndex(action.cardID)]
+      const newCard: ICard = {...oldCard,
         'title': action.value
       }  
       return {
@@ -90,7 +92,6 @@ const mainReducer = (state = initialState, action: any) => {
         ]
       }
     case 'DELETE_TASK':
-      console.log(action)
       return {
         ...state, 
         cards: [

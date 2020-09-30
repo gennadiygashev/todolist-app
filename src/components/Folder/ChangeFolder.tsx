@@ -1,26 +1,38 @@
 import React, { useState } from 'react'
 
-import { IconButton, TextField, Dialog, DialogContent, DialogTitle, Button, Radio } from '@material-ui/core/';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { IconButton, TextField, Dialog, DialogContent, DialogTitle, Button, Radio } from '@material-ui/core/'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 
-interface IChangeFolder {
+interface IChangeFolderProps {
   folderID: string, 
-  folderColor: string, 
+  folderColor: 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error', 
   name: string, 
   deleteFolder: (folderID: string) => void,
   changeFolder: (value: string, folderID: string, typeAction: string) => void,
 }
 
-const ChangeFolder: React.FC<IChangeFolder> = ({ folderID, folderColor, name, deleteFolder, changeFolder }) => {
-  const [open, setOpen] = useState(false);
+const ChangeFolder: React.FC<IChangeFolderProps> = ({ folderID, folderColor, name, deleteFolder, changeFolder }) => {
+  const [open, setOpen] = useState(false)
+  const [newTitle, setTitle] = useState<string>(name)
+  const [newColor, setColor] = useState<string>(folderColor)
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    changeFolder(newTitle, folderID, 'name')
+    changeFolder(newColor, folderID, 'folderColor')
+    setOpen(false)
+  }
+
+  const changeTitleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value)
+  }
+
+  const changeColorHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setColor(event.target.value)
+  }
 
   return (
     <>
@@ -36,28 +48,28 @@ const ChangeFolder: React.FC<IChangeFolder> = ({ folderID, folderColor, name, de
             label="Изменить заголовок"
             fullWidth
             defaultValue={name}
-            onChange={(event) => changeFolder(event.target.value, folderID, 'name')}
+            onChange={changeTitleHandler}
           />
           <div>
             <Radio
-              checked={folderColor === 'action'}
-              onChange={() => changeFolder('action', folderID, 'folderColor')}
+              checked={newColor === 'action'}
+              onChange={changeColorHandler}
               value="action"
               color="default"
               name="radio-button-demo"
               inputProps={{ 'aria-label': 'A' }}
             />
             <Radio
-              checked={folderColor === 'secondary'}
-              onChange={() => changeFolder('secondary', folderID, 'folderColor')}
+              checked={newColor === 'secondary'}
+              onChange={changeColorHandler}
               value="secondary"
               name="radio-button-demo"
               color="secondary"
               inputProps={{ 'aria-label': 'B' }}
             />
             <Radio
-              checked={folderColor === 'primary'}
-              onChange={() => changeFolder('primary', folderID, 'folderColor')}
+              checked={newColor === 'primary'}
+              onChange={changeColorHandler}
               value="primary"
               color="primary"
               name="radio-button-demo"

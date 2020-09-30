@@ -1,19 +1,18 @@
 import Axios from '../../../axios/axios-folders'
+import { IFolder } from '../../../interfaces'
 import { 
   FETCH_MENULIST_STARTED,
   FETCH_MENULIST_SUCCESS,
   FETCH_MENULIST_FAILURE
 } from '../actionTypes'
 
+
 export function fetchMenuList() {
-  return async (dispatch: (arg0: { type: string; folders?: any; error?: any }) => void) => {
+  return async (dispatch: any) => {
     dispatch(fetchMenuListStarted())
     try {      
       const response = await Axios.get('/folders.json')
-      const folders: any = []
-      Object.values(response.data).forEach((folder) => {
-        folders.push(folder)
-      })  
+      const folders: IFolder[] = Object.values(response.data)
       dispatch(fetchMenuListSuccess(folders))
     } catch (e) {
       dispatch(fetchMenuListFailure(e))
@@ -27,7 +26,7 @@ export function fetchMenuListStarted() {
   }
 }
 
-export function fetchMenuListSuccess(folders: any) {
+export function fetchMenuListSuccess(folders: IFolder[]) {
   return {
     type: FETCH_MENULIST_SUCCESS,
     folders

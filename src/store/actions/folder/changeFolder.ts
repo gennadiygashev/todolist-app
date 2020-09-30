@@ -1,7 +1,7 @@
 import Axios from '../../../axios/axios-folders'
 import { CHANGE_FOLDER } from '../actionTypes'
 
-export function changeFolder(value: any, folderID: any, typeAction: any) {
+export function changeFolder(value: string, folderID: string, typeAction: string) {
   if (typeAction === 'name') {
     Axios.patch(`/folders/${folderID}.json`, {name: value})
   }

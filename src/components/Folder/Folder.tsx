@@ -4,34 +4,33 @@ import { Link } from 'react-router-dom'
 import ChangeFolder from './ChangeFolder'
 
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core/'
-import FolderIcon from '@material-ui/icons/Folder';
+import FolderIcon from '@material-ui/icons/Folder'
+import { IFolder } from '../../interfaces'
 
-interface IFolder {
-  folderID: string, 
-  folderColor: 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error', 
-  name: string, 
-  deleteFolder: (folderID: any) => void, 
-  changeFolder: (value: any, folderID: any, typeAction: any) => void
+interface IFolderProps {
+  folderData: IFolder
+  deleteFolder: (folderID: string) => void, 
+  changeFolder: (value: string, folderID: string, typeAction: string) => void
 }
 
-const Folder: React.FC<IFolder> = ({ folderID, folderColor, name, deleteFolder, changeFolder }) => {
+const Folder: React.FC<IFolderProps> = ({ folderData, deleteFolder, changeFolder }) => {
   return(
     <>
-      <ListItem button key={folderID} >
-        <Link to={`/folders/${folderID}`}>
+      <ListItem button key={folderData.folderID} >
+        <Link to={`/folders/${folderData.folderID}`}>
           <ListItemIcon>
-            <FolderIcon color={folderColor} />
+            <FolderIcon color={folderData.folderColor} />
           </ListItemIcon>
         </Link>
-        <Link to={`/folders/${folderID}`}>
-          <ListItemText primary={name} />
+        <Link to={`/folders/${folderData.folderID}`}>
+          <ListItemText primary={folderData.name} />
         </Link>
         <ChangeFolder 
           deleteFolder={deleteFolder} 
-          folderID={folderID} 
-          name={name} 
+          folderID={folderData.folderID} 
+          name={folderData.name} 
           changeFolder={changeFolder}
-          folderColor={folderColor}
+          folderColor={folderData.folderColor}
         />
       </ListItem>
     </> 

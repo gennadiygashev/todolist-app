@@ -1,19 +1,21 @@
 import React from 'react'
 
+import { ITask } from '../../interfaces'
+
 import Task from './Task'
 
-interface ITaskList {
+interface ITaskListProps {
   currentFolder: string, 
   cardID: string,
-  tasks: Array<Object>, 
-  deleteTask: (currentFolder: any, cardID: any, taskID: any) => void,
-  changeCardsTask: (taskData: any, currentFolder: any, cardID: any, taskID: any, typeAction: any) => void,
+  tasks: ITask[], 
+  deleteTask: (currentFolder: string, cardID: string, taskID: string) => void,
+  changeCardsTask: (taskData: ITask, currentFolder: string, cardID: string, taskID: string, typeAction: string) => void,
 }
 
-const TaskList: React.FC<ITaskList> = ({ tasks, currentFolder, cardID, changeCardsTask, deleteTask }) => {
+const TaskList: React.FC<ITaskListProps> = ({ tasks, currentFolder, cardID, changeCardsTask, deleteTask }) => {
   return (
     <>
-      {tasks === undefined ?
+      {tasks === undefined || Object.values(tasks).length === 0 ?
       <h1>Poka Zadach net</h1> :
       Object.values(tasks).map((task: any) => {
         return (

@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { Box, Grid } from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import { Box, Grid } from '@material-ui/core/'
+import { makeStyles } from '@material-ui/core/styles'
+import AddBoxIcon from '@material-ui/icons/AddBox'
 
-interface IAddCard {
+interface IAddCardProps{
   addNewCard: (currentFolder :string) => void,
   currentFolder: string
 }
@@ -17,10 +17,10 @@ const useStyles = makeStyles({
   block: {
     height: '100%',
   }
-});
+})
 
-const AddCard: React.FC<IAddCard> = ({ addNewCard, currentFolder }) => {
-  const classes = useStyles();
+const AddCard: React.FC<IAddCardProps> = ({ addNewCard, currentFolder }) => {
+  const classes = useStyles()
   return (
     <Box onClick={() => addNewCard(currentFolder)} className={classes.root}>
       <Grid

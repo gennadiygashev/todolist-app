@@ -2,24 +2,25 @@ import React from 'react'
 
 import Card from './Card'
 import AddCard from './AddCard'
-import EmptyCardsList from './EmptyCardsList';
-import LoadCards from './LoadCards';
+import EmptyCardsList from './EmptyCardsList'
+import LoadCards from './LoadCards'
 
-import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box'
+import { ICard, ITask } from '../../interfaces'
 
-interface ICardList {
+interface ICardListProps {
   loading: boolean,
-  cards: Array<Object>, 
+  cards: ICard[], 
   currentFolder: string, 
-  addNewCard: (currentFolder: any) => void,
-  deleteCard: (currentFolder: any, cardID: any) => void,
-  changeCardTitle: (currentFolder: any, cardID: any, value: any) => void,
-  addNewTask: (currentFolder: any, cardID: any, title: any) => void,
-  deleteTask: (currentFolder: any, cardID: any, taskID: any) => void,
-  changeCardsTask: (taskData: any, currentFolder: any, cardID: any, taskID: any, typeAction: any) => void,
+  addNewCard: (currentFolder: string) => void,
+  deleteCard: (currentFolder: string, cardID: string) => void,
+  changeCardTitle: (currentFolder: string, cardID: string, value: string) => void,
+  addNewTask: (currentFolder: string, cardID: string, title: string) => void,
+  deleteTask: (currentFolder: string, cardID: string, taskID: string) => void,
+  changeCardsTask: (taskData: ITask, currentFolder: string, cardID: string, taskID: string, typeAction: string) => void,
 }
 
-const CardList: React.FC<ICardList> = ({ loading, cards, currentFolder, addNewCard, deleteCard, changeCardTitle, addNewTask, changeCardsTask, deleteTask }) => {
+const CardList: React.FC<ICardListProps> = ({ loading, cards, currentFolder, addNewCard, deleteCard, changeCardTitle, addNewTask, changeCardsTask, deleteTask }) => {
   if (loading === true) {
     return (
       <Box p={1} minWidth='100%' maxWidth='100%' minHeight='85vh' borderColor="paper">
@@ -27,7 +28,7 @@ const CardList: React.FC<ICardList> = ({ loading, cards, currentFolder, addNewCa
       </Box>
     )
   }
-  if (cards === undefined || cards.length === 0 ) {
+  if (cards.length === 0) {
     return (
       <Box p={1} minWidth='100%' maxWidth='100%' minHeight='85vh' borderColor="paper">
         <EmptyCardsList
@@ -39,17 +40,14 @@ const CardList: React.FC<ICardList> = ({ loading, cards, currentFolder, addNewCa
   }
   return (
     <>
-      {cards.map((card: any) => {
+      {cards.map((card: ICard) => {
         return(
-          <Box p={1} minWidth='25%' maxWidth='25%' minHeight='85vh' borderRight={1} borderColor="paper">
+          <Box p={1} minWidth='25%' maxWidth='25%' minHeight='85vh' borderRight={1} borderColor="paper" key={card.key}>
             <Card 
-              key={card.cardID} 
-              cardID={card.cardID}
+              cardData={card}
               currentFolder={currentFolder}
-              title={card.title}
               deleteCard={deleteCard}
               changeCardTitle={changeCardTitle}
-              tasks={card.tasks}
               addNewTask={addNewTask}
               changeCardsTask={changeCardsTask} 
               deleteTask={deleteTask}

@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Menu from '../containers/Menu'
 import Main from '../containers/Main'
 
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import clsx from 'clsx'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Button, IconButton, CssBaseline, List, Toolbar, AppBar, Drawer } from '@material-ui/core/'
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import MenuIcon from '@material-ui/icons/Menu'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,20 +72,20 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-}));
+}))
 
 export default function Folders() {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const classes = useStyles()
+  const theme = useTheme()
+  const [open, setOpen] = useState(false)
   
   const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <div className={classes.root}>
@@ -147,5 +147,5 @@ export default function Folders() {
         </main>
       </Router>
     </div>
-  );
+  )
 }

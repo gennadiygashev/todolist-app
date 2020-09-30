@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Button, Grid } from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, Grid } from '@material-ui/core/'
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
   root: {
@@ -9,13 +9,13 @@ const useStyles = makeStyles({
   }
 })
 
-interface IEmptyCardsList {
+interface IEmptyCardsListProps {
   addNewCard: (currentFolder: string) => void, 
   currentFolder: string
 }
 
-const EmptyCardsList:React.FC<IEmptyCardsList> = ({ addNewCard, currentFolder }) => {
-  const classes = useStyles();
+const EmptyCardsList:React.FC<IEmptyCardsListProps> = ({ addNewCard, currentFolder }) => {
+  const classes = useStyles()
   return(
       <Grid
         container

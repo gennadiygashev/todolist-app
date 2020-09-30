@@ -1,8 +1,9 @@
+import { ITask } from './../../../interfaces'
 import Axios from '../../../axios/axios-folders'
 import { TOGGLE_TASK_PROPERTY } from '../actionTypes'
 
-export function changeCardsTask(taskData: any, currentFolder: any, cardID: any, taskID: any, typeAction: any) {
-  const newTask = taskData;
+export function changeCardsTask(taskData: ITask, currentFolder: string, cardID: string, taskID: string, typeAction: string) {
+  const newTask: ITask = taskData
   if (typeAction === 'done') {
     newTask['done'] = !newTask['done']
     Axios.patch(`/cards/${currentFolder}/${cardID}/tasks/${taskID}.json`, {'done': newTask['done']})

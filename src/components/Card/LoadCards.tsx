@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { CircularProgress, Grid } from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
+import { CircularProgress, Grid } from '@material-ui/core/'
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
   root: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles({
 })
 
 const LoadCards = () => {
-  const classes = useStyles();
+  const classes = useStyles()
   return(
     <Grid
       container

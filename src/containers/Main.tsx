@@ -1,23 +1,24 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
 import CardList from '../components/Card/CardList'
 
 import { addNewCard, fetchCardList, deleteCard, changeCardTitle, addNewTask, changeCardsTask, deleteTask } from '../store/actions'
 
-import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box'
+import { ICard, ITask } from '../interfaces'
 
 interface IMain {
-  currentFolder: any, 
-  cards: any, 
-  loading: any,
-  fetchCardList: (currentFolder: any) => void,
-  addNewCard: (currentFolder: any) => void,
-  deleteCard: (currentFolder: any, cardID: any) => void,
-  changeCardTitle: (currentFolder: any, cardID: any, value: any) => void,
-  addNewTask: (currentFolder: any, cardID: any, title: any) => void,
-  deleteTask: (currentFolder: any, cardID: any, taskID: any) => void,
-  changeCardsTask: (taskData: any, currentFolder: any, cardID: any, taskID: any, typeAction: any) => void,
+  currentFolder: string, 
+  cards: ICard[], 
+  loading: boolean,
+  fetchCardList: (currentFolder: string) => void,
+  addNewCard: (currentFolder: string) => void,
+  deleteCard: (currentFolder: string, cardID: string) => void,
+  changeCardTitle: (currentFolder: string, cardID: string, value: string) => void,
+  addNewTask: (currentFolder: string, cardID: string, title: string) => void,
+  deleteTask: (currentFolder: string, cardID: string, taskID: string) => void,
+  changeCardsTask: (taskData: ITask, currentFolder: string, cardID: string, taskID: string, typeAction: string) => void,
 }
 
 const Main: React.FC<IMain> = ({ currentFolder, cards, addNewCard, fetchCardList, deleteCard, changeCardTitle, addNewTask, changeCardsTask, deleteTask, loading }) => {
@@ -43,13 +44,13 @@ const Main: React.FC<IMain> = ({ currentFolder, cards, addNewCard, fetchCardList
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
-  fetchCardList: (currentFolder: any) => dispatch(fetchCardList(currentFolder)),
-  addNewCard: (currentFolder: any) => dispatch(addNewCard(currentFolder)),
-  deleteCard: (currentFolder: any, cardID: any) => dispatch(deleteCard(currentFolder, cardID)),
-  changeCardTitle: (currentFolder: any, cardID: any, value: any) => dispatch(changeCardTitle(currentFolder, cardID, value)),
-  addNewTask: (currentFolder: any, cardID: any, title: any) => dispatch(addNewTask(currentFolder, cardID, title)),
-  deleteTask: (currentFolder: any, cardID: any, taskID: any) => dispatch(deleteTask(currentFolder, cardID, taskID)),
-  changeCardsTask: (taskData: any, currentFolder: any, cardID: any, taskID: any, typeAction: any) => dispatch(changeCardsTask(taskData, currentFolder, cardID, taskID, typeAction)),
+  fetchCardList: (currentFolder: string) => dispatch(fetchCardList(currentFolder)),
+  addNewCard: (currentFolder: string) => dispatch(addNewCard(currentFolder)),
+  deleteCard: (currentFolder: string, cardID: string) => dispatch(deleteCard(currentFolder, cardID)),
+  changeCardTitle: (currentFolder: string, cardID: string, value: string) => dispatch(changeCardTitle(currentFolder, cardID, value)),
+  addNewTask: (currentFolder: string, cardID: string, title: string) => dispatch(addNewTask(currentFolder, cardID, title)),
+  deleteTask: (currentFolder: string, cardID: string, taskID: string) => dispatch(deleteTask(currentFolder, cardID, taskID)),
+  changeCardsTask: (taskData: ITask, currentFolder: string, cardID: string, taskID: string, typeAction: string) => dispatch(changeCardsTask(taskData, currentFolder, cardID, taskID, typeAction)),
 })
 
 const mapStateToProps = (state: any) => ({

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core/'
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen'
 
 
 const EmptyFolderList: React.FC = () => {

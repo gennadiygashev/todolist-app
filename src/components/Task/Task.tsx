@@ -1,30 +1,31 @@
 import React from 'react'
 
-import { FormControlLabel, Checkbox, IconButton, Grid } from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
+import { ITask } from '../../interfaces'
+
+import { FormControlLabel, Checkbox, IconButton, Grid } from '@material-ui/core/'
+import { makeStyles } from '@material-ui/core/styles'
+import DeleteIcon from '@material-ui/icons/Delete'
+import BookmarkIcon from '@material-ui/icons/Bookmark'
 
 const useStyles = makeStyles({
   label: {
-    color: 'red',
-    fontWeight: 500
+    color: 'red'
   }
 })
 
-interface ITask {
+interface ITaskProps {
   title: string, 
   currentFolder: string, 
   cardID: string, 
   taskID: string, 
   done: boolean, 
   important: boolean, 
-  changeCardsTask: (taskData: Object, currentFolder: string, cardID: string, taskID: string, typeAction: string) => void, 
-  taskData: Object, 
+  changeCardsTask: (taskData: ITask, currentFolder: string, cardID: string, taskID: string, typeAction: string) => void, 
+  taskData: ITask, 
   deleteTask: (currentFolder: string, cardID: string, taskID: string) => void
 }
 
-const Task: React.FC<ITask> = ({ title, currentFolder, cardID, taskID, done, important, changeCardsTask, taskData, deleteTask }) => {
+const Task: React.FC<ITaskProps> = ({ title, currentFolder, cardID, taskID, done, important, changeCardsTask, taskData, deleteTask }) => {
   const classes = useStyles()
   return (
     <Grid
@@ -45,7 +46,7 @@ const Task: React.FC<ITask> = ({ title, currentFolder, cardID, taskID, done, imp
             />
           }
           label={title}
-          // classes={important ? {label: classes.label} : ''}
+          className={important ? classes.label : ''}
         />
       </Grid>
       <Grid item>

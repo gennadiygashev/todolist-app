@@ -1,7 +1,8 @@
 import Axios from '../../../axios/axios-folders'
+import { IFolder } from '../../../interfaces'
 import { CREATE_NEW_FOLDER } from '../actionTypes'
 
-const createFolder = (name: any) => {
+const createFolder = (name: string): IFolder => {
   return {
     name,
     key: '',
@@ -10,13 +11,13 @@ const createFolder = (name: any) => {
   }
 }
 
-export function addNewFolder(name: any) {
-  return async (dispatch: (arg0: { type: string; folder: any }) => void) => {
-    const newFolder = createFolder(name);
+export function addNewFolder(name: string) {
+  return async (dispatch: any) => {
+    const newFolder: IFolder = createFolder(name)
     try {
       await Axios.post(`/folders.json`, newFolder)
       .then(function (res) {
-        const folderKey: any = ((Object.values(res.data))[0])
+        const folderKey: any = Object.values(res.data)[0]
         newFolder.folderID = folderKey
         newFolder.key = folderKey
         Axios.patch(`/folders/${folderKey}.json`, {'key': folderKey, 'folderID': folderKey})
@@ -28,7 +29,7 @@ export function addNewFolder(name: any) {
   }
 }
 
-export function createNewFolder(folder: any) {
+export function createNewFolder(folder: IFolder) {
   return {
     type: CREATE_NEW_FOLDER,
     folder

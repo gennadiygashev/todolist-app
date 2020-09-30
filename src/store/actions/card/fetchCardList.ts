@@ -1,19 +1,17 @@
 import Axios from '../../../axios/axios-folders'
+import { ICard } from './../../../interfaces'
 import { 
   FETCH_CARDLIST_STARTED,
   FETCH_CARDLIST_SUCCESS,
   FETCH_CARDLIST_FAILURE
 } from '../actionTypes'
 
-export function fetchCardList(currentFolder: any) {
-  return async (dispatch: (arg0: { type: string; cards?: any; error?: any }) => void) => {
+export function fetchCardList(currentFolder: string) {
+  return async (dispatch: any) => {
     dispatch(fetchCardListStarted())
     try {      
       const response = await Axios.get(`/cards/${currentFolder}.json`)
-      const cards: any = []
-      Object.values(response.data).forEach((card) => {
-        cards.push(card)
-      })  
+      const cards: ICard[] = Object.values(response.data)
       dispatch(fetchCardListSuccess(cards))
     } catch (e) {
       dispatch(fetchCardListFailure(e))
@@ -27,7 +25,7 @@ export function fetchCardListStarted() {
   }
 }
 
-export function fetchCardListSuccess(cards: any) {
+export function fetchCardListSuccess(cards: ICard[]) {
   return {
     type: FETCH_CARDLIST_SUCCESS,
     cards

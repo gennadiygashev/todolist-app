@@ -1,25 +1,25 @@
 import React, { useState } from 'react'
 
-import { TextField, Grid } from '@material-ui/core/';
+import { TextField, Grid } from '@material-ui/core/'
 
-interface IAddTask {
+interface IAddTaskProps {
   currentFolder: string, 
   cardID: string,
   addNewTask: (currentFolder: string, cardID: string, title: string) => void
 }
 
-const AddTask: React.FC<IAddTask> = ({ addNewTask, currentFolder, cardID }) => {
+const AddTask: React.FC<IAddTaskProps> = ({ addNewTask, currentFolder, cardID }) => {
   const [title, setTitle] = useState('')
 
-  const onLabelChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const onLabelChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setTitle(e.target.value)
   }
 
-  const onSubmit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    addNewTask(currentFolder, cardID, title);
+  const onSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    addNewTask(currentFolder, cardID, title)
     setTitle('')
-  };
+  }
 
   return(
     <div>

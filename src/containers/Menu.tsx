@@ -5,22 +5,24 @@ import AddFolder from '../components/Folder/AddFolder'
 import Folder from '../components/Folder/Folder'
 import EmptyFolderList from '../components/Folder/EmptyFolderList'
 
+import { IFolder } from '../interfaces'
+
 import { fetchMenuList, addNewFolder, deleteFolder, changeFolder } from '../store/actions'
 
 import { ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core/'
-import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
+import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
 
-interface IMenuList {
-  folders: any, 
+interface IMenuListProps {
+  folders: IFolder[], 
   fetchMenuList: () => void, 
-  addNewFolder: (title: any) => void, 
-  deleteFolder: (folderID: any) => void, 
-  changeFolder: (value: any, folderID: any, typeAction: any) => void
+  addNewFolder: (title: string) => void, 
+  deleteFolder: (folderID: string) => void, 
+  changeFolder: (value: string, folderID: string, typeAction: string) => void
 }
 
-const MenuList: React.FC<IMenuList> = ({ folders, fetchMenuList, addNewFolder, deleteFolder, changeFolder }) => {
+const MenuList: React.FC<IMenuListProps> = ({ folders, fetchMenuList, addNewFolder, deleteFolder, changeFolder }) => {
   const FoldersList = () => {
-    if (folders === undefined || folders.length === 0) {
+    if (folders.length === 0) {
       return (
         <EmptyFolderList/>
       )
@@ -28,11 +30,9 @@ const MenuList: React.FC<IMenuList> = ({ folders, fetchMenuList, addNewFolder, d
     return (
       <>
         {
-          folders.map((folder: any) => (
-            <Folder 
-              name={folder.name}
-              folderID={folder.folderID}
-              folderColor={folder.folderColor}
+          folders.map((folder: IFolder) => (
+            <Folder
+              folderData={folder}
               key={folder.key}
               deleteFolder={deleteFolder}
               changeFolder={changeFolder}
@@ -65,9 +65,9 @@ const MenuList: React.FC<IMenuList> = ({ folders, fetchMenuList, addNewFolder, d
 
 const mapDispatchToProps = (dispatch: any) => ({
   fetchMenuList: () => dispatch(fetchMenuList()),
-  addNewFolder: (title: any) => dispatch(addNewFolder(title)),
-  deleteFolder: (folderID: any) => dispatch(deleteFolder(folderID)),
-  changeFolder: (value: any, folderID: any, typeAction: any) => dispatch(changeFolder(value, folderID, typeAction))
+  addNewFolder: (title: string) => dispatch(addNewFolder(title)),
+  deleteFolder: (folderID: string) => dispatch(deleteFolder(folderID)),
+  changeFolder: (value: string, folderID: string, typeAction: string) => dispatch(changeFolder(value, folderID, typeAction))
 })
 
 const mapStateToProps = (state: any) => ({

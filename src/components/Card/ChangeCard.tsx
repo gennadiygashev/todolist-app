@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 
-import { IconButton, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@material-ui/core/';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { IconButton, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@material-ui/core/'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 
-interface IChangeCard {
+interface IChangeCardProps {
   title: string, 
   currentFolder: string, 
   cardID: string,
   changeCardTitle: (currentFolder: string, cardID: string, value: string) => void
 }
 
-const ChangeCard: React.FC<IChangeCard> = ({ title, changeCardTitle, currentFolder, cardID }) => {
-  const [open, setOpen] = useState(false);
-  const [newTitle, setTitle] = useState(title)
+const ChangeCard: React.FC<IChangeCardProps> = ({ title, changeCardTitle, currentFolder, cardID }) => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [newTitle, setTitle] = useState<string>(title)
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
     changeCardTitle(currentFolder, cardID, newTitle)
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const changeTitleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)

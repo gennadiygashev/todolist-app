@@ -1,4 +1,6 @@
-const initialState = {
+import { IFolder, IMenuInitialState } from './../../interfaces'
+
+const initialState: IMenuInitialState = {
   folders: [],
   loading: false,
   error: null,
@@ -6,9 +8,9 @@ const initialState = {
 
 const menuReducer = (state = initialState, action: any) => {
   
-  const folderIndex = (folderID: any) => {
+  const folderIndex = (folderID: string) => {
     return (
-      state.folders.findIndex((el: any) => el.folderID === folderID)
+      state.folders.findIndex((el: IFolder) => el.folderID === folderID)
     )
   }  
 
@@ -39,7 +41,7 @@ const menuReducer = (state = initialState, action: any) => {
         ]
       }
     case 'CHANGE_FOLDER':
-      const oldFolder: any = state.folders[folderIndex(action.folderID)];
+      const oldFolder: IFolder = state.folders[folderIndex(action.folderID)]
       const newFolder = {...oldFolder,
         [action.typeAction]: action.value
       }  
