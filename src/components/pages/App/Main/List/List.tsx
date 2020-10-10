@@ -5,7 +5,7 @@ import AddTask from '../../../../UI/Task/AddTask'
 import Task from '../../../../UI/Task/Task'
 
 import { IAppState } from '../../../../../store'
-import { ICard, IList, ITask } from '../../../../../store/data/types'
+import { IElement, ITask } from '../../../../../store/data/types'
 
 import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -38,6 +38,8 @@ type IListC = IListProps & IListState & IListDispatch
 const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fetchData }) => {
   const classes = useStyles()
 
+  console.log(lists)
+
   useEffect(() => {
     fetchData(currentUser, currentFolder)
   }, [currentFolder])
@@ -61,22 +63,22 @@ const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fe
               justify="center"
               alignItems="stretch"
               className={classes.root}
-              key={list.listID}
+              key={list.elementID}
             >
               <Grid item>
                 <h1>Список</h1>
               </Grid>
               <Grid item>
                 {
-                  list.tasks === undefined || Object.values(list.tasks).length === 0 ?
+                  list.tasks.length === 0 ?
                   <h2>В списке пока нет задач</h2> :
-                  Object.values(list.tasks).map((task: any) => {
+                  list.tasks.map((task: any) => {
                     return (
                       <Task 
                         currentUser={currentUser}
                         currentFolder={currentFolder}
                         key={task.taskID}
-                        cardID={list.listID}
+                        elementID={list.elementID}
                         taskData={task}
                       />
                     )
@@ -87,7 +89,7 @@ const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fe
                 <AddTask 
                   currentUser={currentUser}
                   currentFolder={currentFolder}
-                  cardID={list.listID} 
+                  elementID={list.elementID} 
                 />
               </Grid>
             </Grid>

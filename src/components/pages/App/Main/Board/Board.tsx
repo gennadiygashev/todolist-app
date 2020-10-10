@@ -7,7 +7,7 @@ import Card from './Card'
 import EmptyMain from '../Empty/EmptyMain'
 
 import { IAppState } from '../../../../../store'
-import { ICard } from '../../../../../store/data/types'
+import { IElement } from '../../../../../store/data/types'
 import { fetchData } from '../../../../../store/data/actions'
 
 import { compose, spacing, breakpoints, sizing, borders } from '@material-ui/system'
@@ -25,7 +25,7 @@ interface IBoardProps {
 
 interface IBoardState {
   loading: boolean
-  cards: ICard[]
+  cards: IElement[]
 }
 
 interface IBoardDispatch {
@@ -47,7 +47,7 @@ const Board: React.FC<IBoard> = ({ currentUser, loading, cards, currentFolder, f
     )
   } 
 
-  if (cards === undefined || cards.length === 0) {
+  if (cards.length === 0) {
     return (
       <Box p={1} minWidth='100%' maxWidth='100%' minHeight='85vh' borderColor="paper">
         <EmptyMain
@@ -57,11 +57,11 @@ const Board: React.FC<IBoard> = ({ currentUser, loading, cards, currentFolder, f
       </Box>
     )
   }
-  
+
   return (
     <>
       {
-        cards.map((card: ICard) => {
+        cards.map((card: IElement) => {
           return(
             <Box 
               p={1} borderRight={1} borderColor="paper"
@@ -69,7 +69,7 @@ const Board: React.FC<IBoard> = ({ currentUser, loading, cards, currentFolder, f
               sm={{ minWidth: '46vw', maxWidth: '46vw', minHeight: '85vh' }}
               md={{ minWidth: '31vw', maxWidth: '31vw', minHeight: '85vh' }} 
               lg={{ minWidth: '24vw', maxWidth: '24vw', minHeight: '85vh' }}  
-              key={card.cardID}
+              key={card.elementID}
             >
               <Card 
                 currentUser={currentUser}

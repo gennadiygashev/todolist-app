@@ -8,7 +8,7 @@ import { TextField, Grid } from '@material-ui/core/'
 interface IAddTaskProps {
   currentUser: string
   currentFolder: string, 
-  cardID: string,
+  elementID: string,
 }
 
 interface IAddTaskDispatch {
@@ -17,7 +17,7 @@ interface IAddTaskDispatch {
 
 type IAddTask = IAddTaskProps & IAddTaskDispatch
 
-const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, cardID, addTask }) => {
+const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, elementID, addTask }) => {
   const [title, setTitle] = useState('')
 
   const onLabelChange = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -26,7 +26,7 @@ const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, cardID, addTa
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault()
-    addTask(currentUser, currentFolder, cardID, title)
+    addTask(currentUser, currentFolder, elementID, title)
     setTitle('')
   }
 
@@ -36,7 +36,7 @@ const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, cardID, addTa
         <Grid item>
           <form onSubmit={onSubmit}>
             <TextField 
-              id={`addTask${cardID}`} 
+              id={`addTask${elementID}`} 
               label='Добавить задачу'
               type="text" 
               onChange={onLabelChange}

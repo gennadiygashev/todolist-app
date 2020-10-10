@@ -5,13 +5,13 @@ import DeleteCard from '../../../../UI/Card/DeleteCard'
 import ChangeCard from '../../../../UI/Card/ChangeCard'
 import Task from '../../../../UI/Task/Task'
 
-import { ICard, ITask } from '../../../../../store/data/types'
+import { IElement, ITask } from '../../../../../store/data/types'
 
 import { CardHeader, CardContent, Box } from '@material-ui/core/'
 
 interface ICardC {
   currentUser: string
-  cardData: ICard
+  cardData: IElement
   currentFolder: string, 
 }
 
@@ -30,7 +30,7 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder }) => {
             <DeleteCard              
               currentFolder={currentFolder}
               currentUser={currentUser}
-              cardID={cardData.cardID}
+              elementID={cardData.elementID}
             />
           </>
         }
@@ -46,7 +46,7 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder }) => {
                 currentUser={currentUser}
                 currentFolder={currentFolder}
                 key={task.taskID}
-                cardID={cardData.cardID}
+                elementID={cardData.elementID}
                 taskData={task}
               />
             )
@@ -55,7 +55,7 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder }) => {
         <AddTask 
           currentUser={currentUser}
           currentFolder={currentFolder}
-          cardID={cardData.cardID}
+          elementID={cardData.elementID}
         />
       </CardContent>
     </Box> 

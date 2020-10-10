@@ -1,21 +1,14 @@
 export interface IDataState {
-  readonly elements: ICard[],
+  readonly elements: IElement[],
   readonly loading: boolean,
   readonly error: any
 }
 
-export interface ICard {
+export interface IElement {
   title: string,
   tasks: ITask[],
   key: string, 
-  cardID: string
-}
-
-export interface IList {
-  title: string,
-  tasks: ITask[],
-  key: string, 
-  listID: string
+  elementID: string
 }
 
 export interface ITask {

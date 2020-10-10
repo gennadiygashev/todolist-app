@@ -31,6 +31,7 @@ async function handleCreate(currentUser: any, name: any) {
 
 function handleDelete(currentUser: string, folderID: string) {
   Axios.delete(`/${currentUser}/folders/${folderID}.json`)
+  Axios.delete(`/${currentUser}/data/${folderID}.json`)
 }
 
 function handleChange(currentUser: string, value: string, folderID: string, typeAction: string) {

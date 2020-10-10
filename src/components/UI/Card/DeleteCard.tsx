@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 import ClearIcon from '@material-ui/icons/Clear'
 
 interface IDeleteCardProps {
-  cardID: string,
+  elementID: string,
   currentFolder: string
   currentUser: string
 }
@@ -18,9 +18,9 @@ interface IDeleteCardDispatch {
 
 type IDeleteCard = IDeleteCardProps & IDeleteCardDispatch
 
-const DeleteCard:React.FC<IDeleteCard> = ({ currentUser, cardID, currentFolder, deleteCard }) => {
+const DeleteCard:React.FC<IDeleteCard> = ({ currentUser, elementID, currentFolder, deleteCard }) => {
   return (
-    <IconButton onClick={() => deleteCard(currentUser, currentFolder, cardID)}>
+    <IconButton onClick={() => deleteCard(currentUser, currentFolder, elementID)}>
       <ClearIcon />
     </IconButton>
   )

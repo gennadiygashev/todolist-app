@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
-import { ICard } from '../../../store/data/types'
+import { IElement } from '../../../store/data/types'
 import { changeCard } from '../../../store/data/actions'
 
 import { IconButton, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@material-ui/core/'
@@ -9,7 +9,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 interface IChangeCardProps {
   currentUser: string
-  cardData: ICard, 
+  cardData: IElement, 
   currentFolder: string, 
 }
 
@@ -28,7 +28,7 @@ const ChangeCard: React.FC<IChangeCard> = ({ currentUser, cardData, currentFolde
   }
 
   const handleClose = () => {
-    changeCard(currentUser, currentFolder, cardData.cardID, newTitle)
+    changeCard(currentUser, currentFolder, cardData.elementID, newTitle)
     setOpen(false)
   }
 

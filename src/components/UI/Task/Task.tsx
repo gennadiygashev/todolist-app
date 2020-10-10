@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 interface ITaskProps {
   currentUser: string
   currentFolder: string
-  cardID: string
+  elementID: string
   taskData: ITask 
 }
 
@@ -29,18 +29,18 @@ interface ITaskDispatch {
 
 type ITaskC = ITaskProps & ITaskDispatch
 
-const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, cardID, taskData, deleteTask, toggleTaskProperty }) => {
+const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskData, deleteTask, toggleTaskProperty }) => {
   const classes = useStyles()
   const [check, toggleCheck] = useState<boolean>(taskData.done)
   const [important, toggleImportant] = useState<boolean>(taskData.important)
 
   const changeCheckedHandler = () => {
-    toggleTaskProperty(currentUser, taskData, currentFolder, cardID, taskData.taskID, 'done')
+    toggleTaskProperty(currentUser, taskData, currentFolder, elementID, taskData.taskID, 'done')
     toggleCheck(!check)
   }
 
   const changeImportantHandler = () => {
-    toggleTaskProperty(currentUser, taskData, currentFolder, cardID, taskData.taskID, 'important')
+    toggleTaskProperty(currentUser, taskData, currentFolder, elementID, taskData.taskID, 'important')
     toggleImportant(!important)
   }
 
@@ -69,7 +69,7 @@ const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, cardID, taskData, 
       <Grid item>
         <IconButton 
           color="secondary"
-          onClick={() => deleteTask(currentUser, currentFolder, cardID, taskData.taskID)}
+          onClick={() => deleteTask(currentUser, currentFolder, elementID, taskData.taskID)}
         >
           <DeleteIcon />
         </IconButton>
