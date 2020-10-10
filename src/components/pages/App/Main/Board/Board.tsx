@@ -64,8 +64,8 @@ const Board: React.FC<IBoard> = ({ currentUser, loading, cards, currentFolder, f
         cards.map((card: IElement) => {
           return(
             <Box 
-              p={1} borderRight={1} borderColor="paper"
-              xs={{ minWidth: '90vw', maxWidth: '90vw', minHeight: '85vh' }}
+              p={1} 
+              xs={{ minWidth: '100vw', maxWidth: '100vw', minHeight: '85vh' }}
               sm={{ minWidth: '46vw', maxWidth: '46vw', minHeight: '85vh' }}
               md={{ minWidth: '31vw', maxWidth: '31vw', minHeight: '85vh' }} 
               lg={{ minWidth: '24vw', maxWidth: '24vw', minHeight: '85vh' }}  
@@ -81,9 +81,10 @@ const Board: React.FC<IBoard> = ({ currentUser, loading, cards, currentFolder, f
         })
       }
       <Box 
-        xs={{ minWidth: '100%', maxWidth: '100%', minHeight: '85vh' }}
-        sm={{ minWidth: '50%', maxWidth: '50%', minHeight: '85vh' }}
-        md={{ minWidth: '25%', maxWidth: '25%', minHeight: '85vh' }} 
+        xs={{ minWidth: '100vw', maxWidth: '100vw', minHeight: '85vh' }}
+        sm={{ minWidth: '46vw', maxWidth: '46vw', minHeight: '85vh' }}
+        md={{ minWidth: '31vw', maxWidth: '31vw', minHeight: '85vh' }} 
+        lg={{ minWidth: '24vw', maxWidth: '24vw', minHeight: '85vh' }}  
       >
         <AddCard 
           currentUser={currentUser}

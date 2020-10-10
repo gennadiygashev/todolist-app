@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { IFolder } from '../../../store/folders/types'
 
-import { ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
+import { Badge, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
 import FolderIcon from '@material-ui/icons/Folder'
 import ViewCarouselIcon from '@material-ui/icons/ViewCarousel'
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted'
@@ -27,17 +27,17 @@ const FoldersList: React.FC<IFoldersList> = ({ folders = [] }) => {
   const myFolderIcon = (folder: IFolder) => {
     switch (folder.typeData) {
       case ('board'): 
-        return <ViewCarouselIcon color={folder.folderColor} />
+        return <Badge badgeContent={folder.folderLength} color="primary"><ViewCarouselIcon color={folder.folderColor} /></Badge>
       case ('list'): 
-        return <FormatListBulletedIcon color={folder.folderColor} />
+        return <Badge badgeContent={folder.folderLength} color="primary"><FormatListBulletedIcon color={folder.folderColor} /></Badge>
       default:
-        return <FolderIcon color={folder.folderColor} />
+        return <Badge badgeContent={folder.folderLength} color="primary"><FolderIcon color={folder.folderColor} /></Badge>
     }
   }
 
   if (folders.length === 0) {
     return (
-      <h1>У вас еще нет ни одного списка или доски</h1>
+      <h1>У вас еще нет ни одного проекта</h1>
     )
   }
 

@@ -9,11 +9,32 @@ import { makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 import BookmarkIcon from '@material-ui/icons/Bookmark'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   label: {
     color: 'red'
-  }
-})
+  },
+  task: {
+    border: '1px solid rgba(0, 0, 0, 0.2)',
+    marginBottom: 7,
+    marginTop: 7,
+    paddingLeft: 7,
+    borderRadius: 10, 
+    position: 'relative',
+    [theme.breakpoints.up('sm')]: {
+      '&:hover .buttons': {
+        opacity: 1,
+        transition: 'opacity .2s ease-in'
+      }
+    }
+  },
+  buttons: {
+    position: 'absolute',
+    left: '225px',
+    [theme.breakpoints.up('sm')]: {
+      left: '198px',
+    }
+  },
+}))
 
 interface ITaskProps {
   currentUser: string
@@ -50,6 +71,7 @@ const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskDat
       direction="row"
       justify="space-between"
       alignItems="center"
+      className={classes.task}
     >
       <Grid item>
         <FormControlLabel
@@ -59,14 +81,13 @@ const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskDat
               id={taskData.taskID}
               onChange={() => changeCheckedHandler()}
               color={taskData.important ? 'secondary' : 'primary'}
-              inputProps={{ 'aria-label': 'primary checkbox' }}
             />
           }
           label={taskData.title}
           className={important ? classes.label : ''}
         />
       </Grid>
-      <Grid item>
+      <Grid item className={classes.buttons}>
         <IconButton 
           color="secondary"
           onClick={() => deleteTask(currentUser, currentFolder, elementID, taskData.taskID)}

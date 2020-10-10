@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-  }
+  },
+  title: {
+    fontSize: 20
+  },
 }))
 
 interface IFoldersRouterProps {
@@ -62,7 +65,7 @@ const Folders: React.FC<IFolders> = ({ currentUser, fetchFolders }) => {
         className={clsx(classes.appBar)}
       >
         <Toolbar>
-          <h1>Список ваших папок</h1>
+          <h1 className={classes.title}>Список Ваших проектов</h1>
         </Toolbar>
       </AppBar>
       <main className={classes.content} style={{ padding: '0' }} >

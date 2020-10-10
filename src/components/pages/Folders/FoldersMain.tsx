@@ -44,7 +44,7 @@ const FoldersMain: React.FC<IFoldersMain> = ({ currentUser, loading, folders }) 
       <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item xs={12} md={6}>
           <Typography variant="h6" className={classes.title}>
-            Выберете папку
+            Выберите проект
           </Typography>
           <div className={classes.demo}>
             <List>

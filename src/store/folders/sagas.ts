@@ -16,6 +16,7 @@ async function handleCreate(currentUser: any, name: any) {
       key: '',
       folderID: '',
       folderColor: 'action',
+      folderLength: 0,
     }
   }
 
@@ -34,7 +35,7 @@ function handleDelete(currentUser: string, folderID: string) {
   Axios.delete(`/${currentUser}/data/${folderID}.json`)
 }
 
-function handleChange(currentUser: string, value: string, folderID: string, typeAction: string) {
+export function handleChange(currentUser: string, value: string | number, folderID: string, typeAction: string) {
   if (typeAction === 'name') {
     Axios.patch(`/${currentUser}/folders/${folderID}.json`, {name: value})
   }
@@ -43,6 +44,9 @@ function handleChange(currentUser: string, value: string, folderID: string, type
   }
   if (typeAction === 'typeData') {
     Axios.patch(`/${currentUser}/folders/${folderID}.json`, {typeData: value})
+  }  
+  if (typeAction === 'folderLength') {
+    Axios.patch(`/${currentUser}/folders/${folderID}.json`, {folderLength: value})
   }  
 }
 

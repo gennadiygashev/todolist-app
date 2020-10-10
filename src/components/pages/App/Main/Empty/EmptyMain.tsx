@@ -8,11 +8,26 @@ import { changeFolder } from '../../../../../store/folders/actions'
 import { Button, Grid } from '@material-ui/core/'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
+    [theme.breakpoints.up('sm')]: {
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row',
+    }
+  },
+  button: {
+    marginBottom: 10, 
+    marginRight: 10
   }
-})
+}))
 
 interface IEmptyMainProps {
   currentUser: string
@@ -55,16 +70,16 @@ const EmptyMain:React.FC<IEmptyMain> = ({ currentUser, currentFolder, addCard, a
       <Grid
         container
         direction="column"
-        justify="center"
-        alignItems="center"
+        justify="flex-start"
+        alignItems="flex-start"
         className={classes.root}
       >
         <Grid item>
-          <h1>В данный момент ваша папка пуста</h1>
+          <h1>В данный момент ваш проект пуст</h1>
         </Grid>
-        <Grid item>
-          <Button onClick={addCardToBoard}>Создать новую карточку</Button>
-          <Button onClick={addCardToList}>Создать новый список</Button>
+        <Grid item className={classes.buttons}>
+          <Button variant='outlined' onClick={addCardToBoard} className={classes.button}>Создать карточку</Button>
+          <Button variant='outlined' onClick={addCardToList} className={classes.button}>Создать список</Button> 
         </Grid>
       </Grid>
   )

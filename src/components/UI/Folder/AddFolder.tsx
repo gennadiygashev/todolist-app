@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 
 import { addFolder } from '../../../store/folders/actions'
 
-import { TextField, Grid } from '@material-ui/core/'
+import { TextField, Grid, IconButton } from '@material-ui/core/'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert'
 import { makeStyles } from '@material-ui/core/styles'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 
 function Alert(props: JSX.IntrinsicAttributes & AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(2),
     },
+  },
+  margin: {
+    margin: theme.spacing(1),
   },
 }))
 
@@ -62,9 +66,12 @@ const AddFolder: React.FC<IAddFolder> = ({ currentUser, addFolder }) => {
               type="text" 
               onChange={onLabelChange}
               value={label}
-              onSubmit={onSubmit} 
+              onSubmit={onSubmit}  
               size="small"
             />
+            <IconButton aria-label="delete" className={classes.margin} disabled={label.length === 0} onClick={onSubmit}>
+              <ArrowForwardIcon fontSize="inherit" color={(label.length !== 0) ? 'primary' : 'disabled'} /> 
+            </IconButton>
           </form>
         </Grid>
       </Grid>

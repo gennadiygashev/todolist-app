@@ -9,7 +9,8 @@ export interface IFolder {
   key: string,
   folderID: string,
   folderColor: 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error',
-  typeData: 'notChosen' | 'list' | 'board'
+  typeData: 'notChosen' | 'list' | 'board',
+  folderLength: number
 }
 
 export enum ActionType {

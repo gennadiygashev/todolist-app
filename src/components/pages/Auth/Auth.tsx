@@ -88,7 +88,7 @@ const Auth: React.FC<IAuth> = ({ auth }) => {
       value: '',
       type: 'email',
       label: 'Эмейл',
-      errorMessage: 'Эмейл должен быть болле 6 символов',
+      errorMessage: 'Введите корректный Эмейл',
       valid: false,
       touched: false,
       validation: {

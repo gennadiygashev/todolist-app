@@ -12,12 +12,14 @@ import { makeStyles } from '@material-ui/core/styles'
 import LoadCards from '../../../../UI/LoadCardsList'
 import { fetchData } from '../../../../../store/data/actions'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    paddingLeft: '4rem',
-    paddingRight: '4rem'
-  }
-})
+    padding: '1rem',
+    [theme.breakpoints.up('sm')]: {
+      padding: '2rem 4rem',
+    }
+  } 
+}))
 
 interface IListProps {
   currentUser: string
@@ -37,8 +39,6 @@ type IListC = IListProps & IListState & IListDispatch
 
 const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fetchData }) => {
   const classes = useStyles()
-
-  console.log(lists)
 
   useEffect(() => {
     fetchData(currentUser, currentFolder)
@@ -65,9 +65,6 @@ const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fe
               className={classes.root}
               key={list.elementID}
             >
-              <Grid item>
-                <h1>Список</h1>
-              </Grid>
               <Grid item>
                 {
                   list.tasks.length === 0 ?

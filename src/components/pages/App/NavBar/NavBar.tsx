@@ -10,14 +10,14 @@ import { IFolder } from '../../../../store/folders/types'
 
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { IconButton, CssBaseline, List, Toolbar, AppBar, Drawer, Divider, ListItem, ListItemIcon, ListItemText, Button } from '@material-ui/core/'
+import { IconButton, CssBaseline, List, Toolbar, AppBar, Drawer, Divider, ListItem, ListItemIcon, ListItemText, Button, Typography } from '@material-ui/core/'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
 import { fetchFoldersFailure } from '../../../../store/folders/actions'
 
-const drawerWidth = 240
+const drawerWidth = 310
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: 0,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -46,11 +49,14 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0, 
     whiteSpace: 'nowrap',
   },
   drawerOpen: {
-    width: drawerWidth,
+    width: '100vw',
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+    },
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -62,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
+    width: 0,
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1,
     },
@@ -78,10 +84,17 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  title: {
+    fontSize: 20
+  }, 
+  toolbarFlex: {
+    justifyContent: 'space-between'
+  }
 }))
 
 interface INavBarProps {
   currentUser: string
+  currentFolderName: string
 }
 
 interface INavBarState {
@@ -90,7 +103,7 @@ interface INavBarState {
 
 type INavBar = INavBarProps & INavBarState 
 
-const NavBar: React.FC<INavBar> = ({ folders, currentUser }) => {
+const NavBar: React.FC<INavBar> = ({ folders, currentUser, currentFolderName }) => {
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
@@ -118,7 +131,7 @@ const NavBar: React.FC<INavBar> = ({ folders, currentUser }) => {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar className={classes.toolbarFlex}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -129,7 +142,8 @@ const NavBar: React.FC<INavBar> = ({ folders, currentUser }) => {
             })}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> 
+          <h1 className={classes.title}>{currentFolderName}</h1>
           <Link to={'/logout'} style={{ color: 'white', textDecoration: 'none' }}><Button color="inherit">Выйти</Button></Link>        
         </Toolbar>
       </AppBar>
@@ -163,7 +177,7 @@ const NavBar: React.FC<INavBar> = ({ folders, currentUser }) => {
           }
           <Divider />
           <ListItem>
-            <ListItemIcon style={{transform: 'translateY(7px)'}}><CreateNewFolderIcon /></ListItemIcon>
+            <ListItemIcon style={{transform: 'translateX(4px)'}}><CreateNewFolderIcon /></ListItemIcon>
             <ListItemText primary={
               <AddFolder 
                 currentUser={currentUser}

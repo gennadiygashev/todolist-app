@@ -9,6 +9,7 @@ import { fetchData } from '../../../store/data/actions'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
+import { IFolder } from '../../../store/folders/types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,25 +36,37 @@ interface IAppRouterProps {
   fetchData: typeof fetchData
 }
 
+interface IAppState {
+  folders: IFolder[]
+}
+
 interface IAppDispatch {
   fetchFolders: typeof fetchFolders
   fetchData: typeof fetchData
 }
 
-type IApp = IAppRouterProps & IAppDispatch
+type IApp = IAppRouterProps & IAppState & IAppDispatch
 
-const App: React.FC<IApp> = ({ currentFolder, currentUser, currentType, fetchFolders, fetchData }) => {  
+const App: React.FC<IApp> = ({ currentFolder, currentUser, currentType, folders, fetchFolders, fetchData }) => {  
   const classes = useStyles()
+
+  const findCurrentFolderName = (currentFolder: string): string => {
+    const idx = folders.findIndex((el) => el.folderID === currentFolder)
+    return folders[idx].name
+  }
+
+  const currentFolderName = findCurrentFolderName(currentFolder)
 
   useEffect(() => {
     fetchFolders(currentUser)
     fetchData(currentUser, currentFolder)
-  }, [])
+  }, [currentFolder])
 
   return (
     <div className={classes.root}>
       <NavBar 
         currentUser={currentUser}
+        currentFolderName={currentFolderName}
       />
       <main className={classes.content} style={{ padding: '0' }} >
         <div className={classes.toolbar} />
@@ -69,9 +82,13 @@ const App: React.FC<IApp> = ({ currentFolder, currentUser, currentType, fetchFol
   )
 }
 
+const mapStateToProps = ({ folders }: any) => ({
+  folders: folders.folders,
+})
+
 const mapDispatchToProps = {
   fetchFolders: fetchFolders,
   fetchData: fetchData
 }
 
-export default connect(null, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -38,7 +38,7 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder }) => {
       />
       <CardContent> 
         {
-          cardData.tasks === undefined || Object.values(cardData.tasks).length === 0 ?
+          cardData.tasks.length === 0 ?
           <h2>В вашей карточке пока пусто</h2> :
           Object.values(cardData.tasks).map((task: ITask) => {
             return (

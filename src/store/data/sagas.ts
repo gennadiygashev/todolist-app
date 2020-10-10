@@ -1,8 +1,11 @@
+import { IFolder } from './../folders/types';
 import { all, call, fork, put, select, takeEvery } from "redux-saga/effects"
 import { ActionType, IElement, ITask } from "./types"
 import Axios from '../../axios/axios'
 import { fetchDataFailure, putData } from "./actions"
 import { getState } from "./reducer"
+import { putFolders } from "../folders/actions"
+import { handleChange } from '../folders/sagas';
 
 async function handleFetch(currentUser: string, currentFolder: string) {
   return await Axios.get(`/${currentUser}/data/${currentFolder}.json`)
@@ -213,7 +216,7 @@ function* workerCreateTask(action: any) {
   let state = yield select(getState)
 
   const newTask = yield call(handleCreateTask, action.payload.currentUser, action.payload.currentFolder, action.payload.elementID, action.payload.title)
-  const idx = state.data.elements.findIndex((el: any) => (el.elementID || el.elementID) === action.payload.elementID)
+  const idx = state.data.elements.findIndex((el: any) => el.elementID === action.payload.elementID)
   const oldCard: any = state.data.elements[idx]
   
   const newCard = {...oldCard,
@@ -227,13 +230,31 @@ function* workerCreateTask(action: any) {
   ]  
 
   yield put(putData(cards))
+
+  const folderIdx = state.folders.folders.findIndex((el: any) => el.folderID === action.payload.currentFolder)
+  const oldFolder: IFolder = state.folders.folders[folderIdx]
+  const newLength = oldFolder.folderLength + 1
+  
+  const newFolder = {...oldFolder,
+    'folderLength': newLength
+  }
+  
+  const folders = [
+    ...state.folders.folders.slice(0, folderIdx),
+    newFolder,
+    ...state.folders.folders.slice(folderIdx + 1)  
+  ]
+
+  yield put(putFolders(folders)) 
+
+  yield call(handleChange, action.payload.currentUser, newLength, action.payload.currentFolder, 'folderLength')
 }
  
 function* workerDeleteTask(action: any) {
   let state = yield select(getState)
 
   yield call(handleDeleteTask, action.payload.currentUser, action.payload.currentFolder, action.payload.elementID, action.payload.taskID)
-  const idx = state.data.elements.findIndex((el: any) => (el.elementID || el.elementID) === action.payload.elementID)
+  const idx = state.data.elements.findIndex((el: any) => el.elementID === action.payload.elementID)
   const oldCard: any = state.data.elements[idx]
   const taskIndex = oldCard.tasks.findIndex((el: any) => el.taskID === action.payload.taskID)
   
@@ -251,6 +272,24 @@ function* workerDeleteTask(action: any) {
   ]
 
   yield put(putData(cards))
+
+  const folderIdx = state.folders.folders.findIndex((el: any) => el.folderID === action.payload.currentFolder)
+  const oldFolder: IFolder = state.folders.folders[folderIdx]
+  const newLength = oldFolder.folderLength - 1
+  
+  const newFolder = {...oldFolder,
+    'folderLength': newLength
+  }
+  
+  const folders = [
+    ...state.folders.folders.slice(0, folderIdx),
+    newFolder,
+    ...state.folders.folders.slice(folderIdx + 1)  
+  ]
+
+  yield put(putFolders(folders)) 
+
+  yield call(handleChange, action.payload.currentUser, newLength, action.payload.currentFolder, 'folderLength')
 }
 
 function* workerToggleTaskProps(action: any) {

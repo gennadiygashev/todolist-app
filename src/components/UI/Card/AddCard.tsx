@@ -9,11 +9,17 @@ import AddBoxIcon from '@material-ui/icons/AddBox'
 
 const useStyles = makeStyles({
   root: {
-    height: '100%',
+    height: '93%',
     cursor: 'pointer'
   },
   block: {
     height: '100%',
+    border: '1px solid rgba(0, 0, 0, .2)',
+    borderRadius: 10, 
+    margin: 24
+  },
+  icon: {
+    color: 'rgba(0, 0, 0, .2)'
   }
 })
 
@@ -40,7 +46,7 @@ const AddCard: React.FC<IAddCard> = ({ currentUser, currentFolder, addCard }) =>
         className={classes.block}
       >
         <Grid item>
-          <AddBoxIcon  />
+          <AddBoxIcon className={classes.icon} />
         </Grid>
       </Grid>
     </Box> 
