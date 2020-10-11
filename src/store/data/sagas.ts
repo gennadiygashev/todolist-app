@@ -2,7 +2,7 @@ import { IFolder } from './../folders/types';
 import { all, call, fork, put, select, takeEvery } from "redux-saga/effects"
 import { ActionType, IElement, ITask } from "./types"
 import Axios from '../../axios/axios'
-import { fetchDataFailure, putData } from "./actions"
+import { fetchData, fetchDataFailure, putData } from "./actions"
 import { getState } from "./reducer"
 import { putFolders } from "../folders/actions"
 import { handleChange } from '../folders/sagas';
@@ -114,7 +114,7 @@ function handleToggleTaskProps(currentUser: string, taskData: ITask, currentFold
 
 function* workerFetchData(action: any) {
   try {
-    const changeData: any = (title: string, tasks = [], key: string, elementID: string) => {
+    const changeData = (title: string, tasks = [], key: string, elementID: string) => {
       tasks = Object.values(tasks)
       return {
         title,
@@ -126,14 +126,14 @@ function* workerFetchData(action: any) {
 
     const response = yield call(handleFetch, action.payload.currentUser, action.payload.currentFolder)
     
-    let data: any = []
+    let data: any[] = []
 
-    Object.values(response.data).map((card: any) => {
+    Object.values(response.data).map((element: any) => {
       data.push(changeData(
-        card.title, 
-        card.tasks, 
-        card.key, 
-        card.elementID)
+        element.title, 
+        element.tasks, 
+        element.key, 
+        element.elementID)
       )
     })
 
@@ -156,7 +156,7 @@ function* workerDeleteCard(action: any) {
 
   yield call(handleDeleteCard, action.payload.currentUser, action.payload.currentFolder, action.payload.elementID)
 
-  const idx = state.data.elements.findIndex((el: any) => el.elementID === action.payload.elementID)
+  const idx = state.data.elements.findIndex((el: IElement) => el.elementID === action.payload.elementID)
   
   const cards = [
     ...state.data.elements.slice(0, idx),
@@ -171,7 +171,7 @@ function* workerCreateCard(action: any) {
 
   const newCard = yield call(handleCreateCard, action.payload.currentUser, action.payload.currentFolder)
 
-  const cards = [
+  const cards: IElement[] = [
     ...state.data.elements,
     newCard
   ]
@@ -184,7 +184,7 @@ function* workerCreateList(action: any) {
 
   const newList = yield call(handleCreateList, action.payload.currentUser, action.payload.currentFolder)
 
-  const list = [
+  const list: IElement[] = [
     ...state.data.elements,
     newList
   ]
@@ -196,14 +196,14 @@ function* workerChangeCard(action: any) {
   let state = yield select(getState)
 
   yield call(handleChangeCard, action.payload.currentUser, action.payload.currentFolder, action.payload.elementID, action.payload.value)
-  const idx = state.data.elements.findIndex((el: any) => el.elementID === action.payload.elementID)
+  const idx = state.data.elements.findIndex((el: IElement) => el.elementID === action.payload.elementID)
   const oldCard: any = state.data.elements[idx]
 
   const newCard: IElement = {...oldCard,
     'title': action.payload.value
   }  
 
-  const cards = [
+  const cards: IElement[] = [
     ...state.data.elements.slice(0, idx),
     newCard,
     ...state.data.elements.slice(idx + 1)  
@@ -215,15 +215,15 @@ function* workerChangeCard(action: any) {
 function* workerCreateTask(action: any) {
   let state = yield select(getState)
 
-  const newTask = yield call(handleCreateTask, action.payload.currentUser, action.payload.currentFolder, action.payload.elementID, action.payload.title)
-  const idx = state.data.elements.findIndex((el: any) => el.elementID === action.payload.elementID)
-  const oldCard: any = state.data.elements[idx]
+  const newTask: ITask = yield call(handleCreateTask, action.payload.currentUser, action.payload.currentFolder, action.payload.elementID, action.payload.title)
+  const idx = state.data.elements.findIndex((el: IElement) => el.elementID === action.payload.elementID)
+  const oldCard: IElement = state.data.elements[idx]
   
-  const newCard = {...oldCard,
+  const newCard: IElement = {...oldCard,
     'tasks': [...oldCard.tasks, newTask]
   } 
 
-  const cards = [
+  const cards: IElement[] = [
     ...state.data.elements.slice(0, idx),
     newCard,
     ...state.data.elements.slice(idx + 1)  
@@ -231,15 +231,15 @@ function* workerCreateTask(action: any) {
 
   yield put(putData(cards))
 
-  const folderIdx = state.folders.folders.findIndex((el: any) => el.folderID === action.payload.currentFolder)
+  const folderIdx = state.folders.folders.findIndex((el: IFolder) => el.folderID === action.payload.currentFolder)
   const oldFolder: IFolder = state.folders.folders[folderIdx]
-  const newLength = oldFolder.folderLength + 1
+  const newLength: number = oldFolder.folderLength + 1
   
-  const newFolder = {...oldFolder,
+  const newFolder: IFolder = {...oldFolder,
     'folderLength': newLength
   }
   
-  const folders = [
+  const folders: IFolder[] = [
     ...state.folders.folders.slice(0, folderIdx),
     newFolder,
     ...state.folders.folders.slice(folderIdx + 1)  
@@ -254,9 +254,9 @@ function* workerDeleteTask(action: any) {
   let state = yield select(getState)
 
   yield call(handleDeleteTask, action.payload.currentUser, action.payload.currentFolder, action.payload.elementID, action.payload.taskID)
-  const idx = state.data.elements.findIndex((el: any) => el.elementID === action.payload.elementID)
-  const oldCard: any = state.data.elements[idx]
-  const taskIndex = oldCard.tasks.findIndex((el: any) => el.taskID === action.payload.taskID)
+  const idx = state.data.elements.findIndex((el: IElement) => el.elementID === action.payload.elementID)
+  const oldCard: IElement = state.data.elements[idx]
+  const taskIndex = oldCard.tasks.findIndex((el: ITask) => el.taskID === action.payload.taskID)
   
   const newCard: IElement = {...oldCard,
     'tasks': [
@@ -265,7 +265,7 @@ function* workerDeleteTask(action: any) {
     ]
   }
 
-  const cards = [
+  const cards: IElement[] = [
     ...state.data.elements.slice(0, idx),
     newCard,
     ...state.data.elements.slice(idx + 1)  
@@ -273,15 +273,15 @@ function* workerDeleteTask(action: any) {
 
   yield put(putData(cards))
 
-  const folderIdx = state.folders.folders.findIndex((el: any) => el.folderID === action.payload.currentFolder)
+  const folderIdx: number = state.folders.folders.findIndex((el: IFolder) => el.folderID === action.payload.currentFolder)
   const oldFolder: IFolder = state.folders.folders[folderIdx]
-  const newLength = oldFolder.folderLength - 1
+  const newLength: number = oldFolder.folderLength - 1
   
-  const newFolder = {...oldFolder,
+  const newFolder: IFolder = {...oldFolder,
     'folderLength': newLength
   }
   
-  const folders = [
+  const folders: IFolder[] = [
     ...state.folders.folders.slice(0, folderIdx),
     newFolder,
     ...state.folders.folders.slice(folderIdx + 1)  

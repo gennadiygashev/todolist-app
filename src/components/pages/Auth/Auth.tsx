@@ -6,9 +6,10 @@ import { auth } from '../../../store/auth/auth'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import { Button, Paper } from '@material-ui/core'
+import { Button, Paper, Snackbar } from '@material-ui/core'
 import { compose, breakpoints, flexbox, sizing } from '@material-ui/system'
 import styled from 'styled-components'
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,9 +80,11 @@ const Box = styled.div`
 
 interface IAuth {
   auth: (email: string, password: string, isLogin: boolean) => void
+  errorMessage: string
 }
 
-const Auth: React.FC<IAuth> = ({ auth }) => { 
+const Auth: React.FC<IAuth> = ({ auth, errorMessage }) => { 
+  console.log(errorMessage)
   const [isFormValid, setIsFormValid] = useState<any>(false)
   const [formControlsState, setFormControlsState] = useState<any>({    
     email: {
@@ -118,7 +121,7 @@ const Auth: React.FC<IAuth> = ({ auth }) => {
     auth(formControlsState.email.value, formControlsState.password.value, false)
   }
 
-  const validateControl = (value: any, validation: any) => {
+  const validateControl = (value: string, validation: any) => {
     if (!validation) {
       return true
     }
@@ -140,7 +143,7 @@ const Auth: React.FC<IAuth> = ({ auth }) => {
     return isValid
   }
 
-  const onChangeHandler = (event: any, controlName: any) => {
+  const onChangeHandler = (event: any, controlName: string) => {
     const formControl = { ...formControlsState }
     const control = { ...formControl[controlName] }
 
@@ -161,6 +164,40 @@ const Auth: React.FC<IAuth> = ({ auth }) => {
     )
 
     setIsFormValid(isFormValid)
+  }
+
+  function Alert(props: AlertProps) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }  
+
+  const errorDialogMessage = () => {
+    if (errorMessage === 'EMAIL_NOT_FOUND') {
+      return (
+        <Snackbar open={true} autoHideDuration={2000}>
+          <Alert severity="error">
+            Аккаунта с таким Эмейлом еще не создано
+          </Alert>
+        </Snackbar> 
+      ) 
+    }
+    if (errorMessage === 'INVALID_PASSWORD') {
+      return (
+        <Snackbar open={true} autoHideDuration={2000}>
+          <Alert severity="error">
+            Вы ввели неверный пароль
+          </Alert>
+        </Snackbar> 
+      ) 
+    }
+    if (errorMessage === 'EMAIL_EXISTS') {
+      return (
+        <Snackbar open={true} autoHideDuration={2000}>
+          <Alert severity="error">
+            Аккаунт с таким Эмейлом уже зарегистрирован
+          </Alert>
+        </Snackbar> 
+      ) 
+    }
   }
  
   const renderFields = () => {
@@ -223,14 +260,19 @@ const Auth: React.FC<IAuth> = ({ auth }) => {
           </Paper>
         </form>
       </div>
+      { errorDialogMessage() }
     </Box>
   );
 }
 
-function mapDispatchToProps(dispatch: any) {
+const mapStateToProps = ({ auth }: any) => ({
+  errorMessage: auth.errorMessage
+})
+ 
+const mapDispatchToProps = (dispatch: any) => {
   return {
     auth: (email: string, password: string, isLogin: boolean) => dispatch(auth(email, password, isLogin))
   }
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)

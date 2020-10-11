@@ -4,11 +4,11 @@ import { fetchFoldersFailure, putFolders } from './actions'
 import { ActionType, IFolder } from './types'
 import { getState } from './reducer'
 
-async function handleFetch(currentUser: any) {
+async function handleFetch(currentUser: string) {
   return await Axios.get(`/${currentUser}/folders.json`)
 }
 
-async function handleCreate(currentUser: any, name: any) {
+async function handleCreate(currentUser: string, name: string) {
   const createFolder = (name: string): IFolder => {
     return {
       name,
@@ -20,11 +20,13 @@ async function handleCreate(currentUser: any, name: any) {
     }
   }
 
-  const newFolder: any = createFolder(name)
+  const newFolder: IFolder = createFolder(name)
   const response = await Axios.post(`/${currentUser}/folders.json`, newFolder)
   const folderKey: any = Object.values(response.data)[0]
+  
   newFolder.folderID = folderKey
   newFolder.key = folderKey
+  
   Axios.patch(`/${currentUser}/folders/${folderKey}.json`, {'key': folderKey, 'folderID': folderKey})
 
   return newFolder
@@ -71,37 +73,47 @@ function* workerFetchFolders(action: any) {
 
 function* workerCreateFolder(action: any) {
   let state = yield select(getState)
-  const newFolder = yield call(handleCreate, action.payload.currentUser, action.payload.name)
-  const folders = [
+  const newFolder: IFolder = yield call(handleCreate, action.payload.currentUser, action.payload.name)
+  
+  const folders: IFolder[] = [
     ...state.folders.folders,
     newFolder
   ]
+
   yield put(putFolders(folders))
 }
 
 function* workerDeleteFolder(action: any) {
   let state = yield select(getState)
+
   yield call(handleDelete, action.payload.currentUser, action.payload.folderID)
-  const idx = state.folders.folders.findIndex((el: IFolder) => el.folderID === action.payload.folderID)
-  const folders = [
+  
+  const idx: number = state.folders.folders.findIndex((el: IFolder) => el.folderID === action.payload.folderID)
+  
+  const folders: IFolder[] = [
     ...state.folders.folders.slice(0, idx),
     ...state.folders.folders.slice(idx + 1)
   ]
+  
   yield put(putFolders(folders))
 }
 
 function* workerChangeFolder(action: any) {
   let state = yield select(getState)
-  const idx = state.folders.folders.findIndex((el: IFolder) => el.folderID === action.payload.folderID)
+
+  const idx: number = state.folders.folders.findIndex((el: IFolder) => el.folderID === action.payload.folderID)
   const oldFolder: IFolder = state.folders.folders[idx]
+  
   const newFolder: IFolder = {...oldFolder,
     [action.payload.typeAction]: action.payload.value
   }  
-  const folders = [
+  
+  const folders: IFolder[] = [
     ...state.folders.folders.slice(0, idx),
     newFolder,
     ...state.folders.folders.slice(idx + 1)  
   ]  
+
   yield call(handleChange, action.payload.currentUser, action.payload.value, action.payload.folderID, action.payload.typeAction)
   yield put(putFolders(folders))
 }

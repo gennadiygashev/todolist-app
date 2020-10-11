@@ -7,9 +7,9 @@ export const initialState: IDataState = {
   error: null
 }
 
-export const getState = (initialState: any) => initialState
+export const getState = (initialState: IDataState) => initialState
 
-const contentReducer: Reducer<IDataState> = (state = initialState, action) => {  
+const contentReducer: Reducer<IDataState> = (state = initialState, action): IDataState => {  
   switch (action.type) {
     case ActionType.FETCH_DATA_STARTED:
       return {

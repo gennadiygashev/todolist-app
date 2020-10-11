@@ -7,9 +7,9 @@ export const initialState: IFoldersState = {
   error: null
 }
 
-export const getState = (initialState: any) => initialState
+export const getState = (initialState: IFoldersState) => initialState
 
-const foldersReducer: Reducer<IFoldersState> = (state = initialState, action) => {  
+const foldersReducer: Reducer<IFoldersState> = (state = initialState, action): IFoldersState => {  
   switch (action.type) {
     case ActionType.FETCH_FOLDERS_STARTED:
       return {

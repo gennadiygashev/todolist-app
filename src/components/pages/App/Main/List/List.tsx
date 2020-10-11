@@ -27,7 +27,7 @@ interface IListProps {
 }
 
 interface IListState {
-  lists: any
+  lists: IElement[]
   loading: boolean
 }
 
@@ -55,7 +55,7 @@ const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fe
   return (
     <>
       {
-        lists.map((list: any) => {
+        lists.map((list: IElement) => {
           return (
             <Grid
               container
@@ -69,7 +69,7 @@ const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fe
                 {
                   list.tasks.length === 0 ?
                   <h2>В списке пока нет задач</h2> :
-                  list.tasks.map((task: any) => {
+                  list.tasks.map((task: ITask) => {
                     return (
                       <Task 
                         currentUser={currentUser}
