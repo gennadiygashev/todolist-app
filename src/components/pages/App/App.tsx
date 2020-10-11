@@ -10,6 +10,7 @@ import { fetchData } from '../../../store/data/actions'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
 import { IFolder } from '../../../store/folders/types'
+import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,9 +51,14 @@ type IApp = IAppRouterProps & IAppState & IAppDispatch
 const App: React.FC<IApp> = ({ currentFolder, currentUser, currentType, folders, fetchFolders, fetchData }) => {  
   const classes = useStyles()
 
-  const findCurrentFolderName = (currentFolder: string): string => {
+  const findCurrentFolderName = (currentFolder: string): any => {
     const idx = folders.findIndex((el) => el.folderID === currentFolder)
-    return folders[idx].name
+    
+    if (folders[idx] === undefined) {
+      return <Redirect to='/folders' />
+    } else {
+      return folders[idx].name
+    }
   }
 
   const currentFolderName = findCurrentFolderName(currentFolder)

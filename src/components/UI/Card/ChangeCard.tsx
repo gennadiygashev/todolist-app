@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { IElement } from '../../../store/data/types'
 import { changeCard } from '../../../store/data/actions'
 
-import { IconButton, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@material-ui/core/'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
+import { IconButton, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Box } from '@material-ui/core/'
+import CreateIcon from '@material-ui/icons/Create'
 
 interface IChangeCardProps {
   currentUser: string
@@ -38,9 +38,9 @@ const ChangeCard: React.FC<IChangeCard> = ({ currentUser, cardData, currentFolde
 
   return (
     <>
-      <IconButton onClick={handleClickOpen}>
-        <MoreVertIcon />
-      </IconButton>
+      <Box onClick={handleClickOpen} style={{ display: 'flex', width: '100%'}}>
+        <CreateIcon style={{ marginRight: 7 }}/> <div>Изменить карточку</div>  
+      </Box>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Редактирование карточки</DialogTitle>
         <DialogContent>

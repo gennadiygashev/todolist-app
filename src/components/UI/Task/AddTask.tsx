@@ -8,8 +8,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 
 const useStyles = makeStyles((theme) => ({
-  margin: {
+  addButton: {
     margin: theme.spacing(1),
+    marginLeft: 0,
+    marginRight: 0, 
+    paddingRight: 0
   },
 }))
 
@@ -42,8 +45,8 @@ const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, elementID, ad
   return(
     <div>
       <Grid container spacing={1} alignItems="flex-end">
-        <Grid item>
-          <form onSubmit={onSubmit}>
+        <Grid item style={{ width: '100%' }}>
+          <form onSubmit={onSubmit} style={{ display: 'flex', justifyContent: 'space-between' }}>
             <TextField 
               id={`addTask${elementID}`} 
               label='Добавить задачу'
@@ -52,8 +55,9 @@ const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, elementID, ad
               value={title}
               onSubmit={onSubmit}
               size='small'
+              style={{ flex: 1 }} 
             />
-            <IconButton aria-label="delete" className={classes.margin} disabled={title.length === 0} onClick={onSubmit}>
+            <IconButton aria-label="delete" className={classes.addButton} disabled={title.length === 0} onClick={onSubmit}>
               <ArrowForwardIcon fontSize="inherit" color={(title.length !== 0) ? 'primary' : 'disabled'} /> 
             </IconButton>
           </form>

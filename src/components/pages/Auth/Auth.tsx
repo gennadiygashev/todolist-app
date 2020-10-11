@@ -84,7 +84,6 @@ interface IAuth {
 }
 
 const Auth: React.FC<IAuth> = ({ auth, errorMessage }) => { 
-  console.log(errorMessage)
   const [isFormValid, setIsFormValid] = useState<any>(false)
   const [formControlsState, setFormControlsState] = useState<any>({    
     email: {
@@ -229,12 +228,7 @@ const Auth: React.FC<IAuth> = ({ auth, errorMessage }) => {
       <Box 
         className={classes.rootContentSide}
       >
-        <h1 className={classes.contentTitle}>Изящное решение для ваших задач и проектов</h1>
-        <ul style={{ listStyle: 'none' }}>
-          <li className={classes.item}>Раз</li>
-          <li className={classes.item}>Два</li>
-          <li className={classes.item}>Три</li>
-        </ul>
+        <h1 className={classes.contentTitle}>Решайте свои задачи с <br />Раз-Два-Три</h1>
       </Box> 
       <div className={classes.rootFormSide}> 
         <form className={classes.rootFormSide} noValidate autoComplete="off">

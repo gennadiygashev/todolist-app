@@ -10,12 +10,11 @@ import { IFolder } from '../../../../store/folders/types'
 
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { IconButton, CssBaseline, List, Toolbar, AppBar, Drawer, Divider, ListItem, ListItemIcon, ListItemText, Button, Typography } from '@material-ui/core/'
+import { IconButton, CssBaseline, List, Toolbar, AppBar, Drawer, Divider, ListItem, ListItemIcon, ListItemText, Button } from '@material-ui/core/'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
-import { fetchFoldersFailure } from '../../../../store/folders/actions'
 
 const drawerWidth = 310
 
@@ -131,7 +130,7 @@ const NavBar: React.FC<INavBar> = ({ folders, currentUser, currentFolderName }) 
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar className={classes.toolbarFlex}>
+        <Toolbar className={classes.toolbarFlex} variant='dense'> 
           <IconButton
             color="inherit"
             aria-label="open drawer"

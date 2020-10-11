@@ -20,8 +20,11 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
-  margin: {
+  addButton: {
     margin: theme.spacing(1),
+    marginLeft: 0,
+    marginRight: 0, 
+    paddingRight: 0
   },
 }))
 
@@ -58,8 +61,8 @@ const AddFolder: React.FC<IAddFolder> = ({ currentUser, addFolder }) => {
   return(
     <div className={classes.root}>
       <Grid container spacing={1} alignItems="flex-end">
-        <Grid item>
-          <form onSubmit={onSubmit}>
+        <Grid item style={{ width: '100%' }}>
+          <form onSubmit={onSubmit} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 16px' }}>
             <TextField 
               id="addFolder" 
               label='Новая папка' 
@@ -68,8 +71,9 @@ const AddFolder: React.FC<IAddFolder> = ({ currentUser, addFolder }) => {
               value={label}
               onSubmit={onSubmit}  
               size="small"
+              style={{ flex: 1 }}  
             />
-            <IconButton aria-label="delete" className={classes.margin} disabled={label.length === 0} onClick={onSubmit}>
+            <IconButton aria-label="delete" className={classes.addButton} disabled={label.length === 0} onClick={onSubmit}>
               <ArrowForwardIcon fontSize="inherit" color={(label.length !== 0) ? 'primary' : 'disabled'} /> 
             </IconButton>
           </form>

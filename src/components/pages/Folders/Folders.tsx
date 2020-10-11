@@ -64,7 +64,7 @@ const Folders: React.FC<IFolders> = ({ currentUser, fetchFolders }) => {
         position="fixed"
         className={clsx(classes.appBar)}
       >
-        <Toolbar>
+        <Toolbar variant='dense'>
           <h1 className={classes.title}>Список Ваших проектов</h1>
         </Toolbar>
       </AppBar>

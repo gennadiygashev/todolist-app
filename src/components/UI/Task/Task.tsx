@@ -5,7 +5,7 @@ import { ITask } from '../../../store/data/types'
 import { deleteTask, toggleTaskProperty } from '../../../store/data/actions'
 
 import { FormControlLabel, Checkbox, IconButton, Grid } from '@material-ui/core/'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 import BookmarkIcon from '@material-ui/icons/Bookmark'
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   label: {
     color: 'red'
   },
-  task: {
+  board: {
     border: '1px solid rgba(0, 0, 0, 0.2)',
     marginBottom: 7,
     marginTop: 7,
@@ -27,20 +27,41 @@ const useStyles = makeStyles((theme) => ({
       }
     }
   },
-  buttons: {
-    position: 'absolute',
-    left: '225px',
+  list: {
+    borderBottom: '1px solid rgba(0, 0, 0, 0.2)',
+    marginBottom: 7,
+    marginTop: 7,
+    paddingLeft: 7,
+    position: 'relative',
     [theme.breakpoints.up('sm')]: {
-      left: '198px',
+      '&:hover .buttons': {
+        opacity: 1,
+        transition: 'opacity .2s ease-in'
+      }
     }
   },
+  buttons: {
+    [theme.breakpoints.up('sm')]: {
+
+    }
+  },
+  checkBoxTitle: {
+    wordBreak: 'break-word'
+  }
 }))
+
+const StyledCheckbox = withStyles({
+  label: {
+    wordBreak: 'break-word',
+  },
+})(FormControlLabel);
 
 interface ITaskProps {
   currentUser: string
   currentFolder: string
   elementID: string
-  taskData: ITask 
+  taskData: ITask,
+  classBorder: 'board' | 'list'
 }
 
 interface ITaskDispatch {
@@ -50,11 +71,11 @@ interface ITaskDispatch {
 
 type ITaskC = ITaskProps & ITaskDispatch
 
-const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskData, deleteTask, toggleTaskProperty }) => {
+const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskData, classBorder, deleteTask, toggleTaskProperty }) => {
   const classes = useStyles()
   const [check, toggleCheck] = useState<boolean>(taskData.done)
   const [important, toggleImportant] = useState<boolean>(taskData.important)
-
+ 
   const changeCheckedHandler = () => {
     toggleTaskProperty(currentUser, taskData, currentFolder, elementID, taskData.taskID, 'done')
     toggleCheck(!check)
@@ -71,10 +92,11 @@ const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskDat
       direction="row"
       justify="space-between"
       alignItems="center"
-      className={classes.task}
+      wrap='nowrap' 
+      className={classBorder === 'board' ? classes.board : classes.list}
     >
       <Grid item>
-        <FormControlLabel
+        <StyledCheckbox
           control={
             <Checkbox
               checked={taskData.done}
@@ -83,6 +105,7 @@ const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskDat
               color={taskData.important ? 'secondary' : 'primary'}
             />
           }
+          classes={{ label: 'checkBoxTitle' }} 
           label={taskData.title}
           className={important ? classes.label : ''}
         />

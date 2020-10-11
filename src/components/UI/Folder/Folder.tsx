@@ -5,11 +5,10 @@ import ChangeFolder from './ChangeFolder'
 
 import { IFolder } from '../../../store/folders/types'
 
-import { Badge, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core/'
+import { Badge, ListItem, ListItemIcon, ListItemText } from '@material-ui/core/'
 import FolderIcon from '@material-ui/icons/Folder'
 import ViewCarouselIcon from '@material-ui/icons/ViewCarousel'
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted'
-import { FolderSharedTwoTone } from '@material-ui/icons'
 
 interface IFolderProps {
   currentUser: string

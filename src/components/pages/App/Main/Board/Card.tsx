@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import AddTask from '../../../../UI/Task/AddTask'
 import DeleteCard from '../../../../UI/Card/DeleteCard'
@@ -7,7 +7,21 @@ import Task from '../../../../UI/Task/Task'
 
 import { IElement, ITask } from '../../../../../store/data/types'
 
-import { CardHeader, CardContent, Box } from '@material-ui/core/'
+import { CardHeader, CardContent, Box, Menu, MenuItem, IconButton, makeStyles } from '@material-ui/core/'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
+
+const useStyles = makeStyles((theme) => ({
+  menuItem: {
+    color: 'rgba(0, 0, 0, .7)', 
+    paddingTop: 10,
+    paddingBottom: 10,
+    '&:not(:last-child)': {
+      borderBottom: '1px solid rgba(0, 0, 0, .2)',
+    }
+  }
+}))
 
 interface ICardC {
   currentUser: string
@@ -16,31 +30,102 @@ interface ICardC {
 }
 
 const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder }) => {
+  const defaultTaskList = () => (
+    cardData.tasks.filter(task => task.done !== true)  
+  ) 
+
+  const classes = useStyles()
+  const [tasks, setTasks] = useState(defaultTaskList())
+  const [showCompletedTasks, setShowCompletedTasks] = useState(false)  
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  useEffect(() => {
+    if (showCompletedTasks) {
+      setTasks(cardData.tasks)
+    } else {
+      defaultTaskList()
+      setTasks(defaultTaskList())
+    }
+  }, [cardData, showCompletedTasks])
+
+  const filterTaskButton = () => {
+    if (showCompletedTasks) {
+      return (
+        <>
+        <RemoveCircleOutlineIcon style={{ marginRight: 7 }}/> 
+        <div>Скрыть выполненные</div>
+      </>
+      )
+    } else {
+      return (
+        <>
+          <CheckCircleOutlineIcon style={{ marginRight: 7 }}/> 
+          <div>Показать выполненные</div>
+        </>     
+      )
+    }
+  }
+
+  const showTasksHandler = () => {
+    setShowCompletedTasks(!showCompletedTasks)
+    handleClose()
+  }
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box style={{ minHeight: '90vh', height: '100%' }}>
       <CardHeader
         title={cardData.title}
         action={
-          <>
-            <ChangeCard 
-              currentFolder={currentFolder}
-              currentUser={currentUser}            
-              cardData={cardData}
-            />
-            <DeleteCard              
-              currentFolder={currentFolder}
-              currentUser={currentUser}
-              elementID={cardData.elementID}
-            />
-          </>
+          <div>
+            <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <MenuItem onClick={handleClose} className={ classes.menuItem } >
+                <ChangeCard 
+                  currentFolder={currentFolder}
+                  currentUser={currentUser}            
+                  cardData={cardData}
+                />
+              </MenuItem>
+              <MenuItem onClick={handleClose} className={ classes.menuItem } >
+                <DeleteCard              
+                  currentFolder={currentFolder}
+                  currentUser={currentUser}
+                  elementID={cardData.elementID}
+                />
+              </MenuItem>
+              <MenuItem onClick={showTasksHandler} className={ classes.menuItem } >
+                <Box style={{ display: 'flex', width: '100%'}}>
+                  { filterTaskButton }
+                </Box>
+              </MenuItem>
+            </Menu>
+          </div>
         }
         style={{ display: 'flex', alignItems: 'baseline' }}
       />
       <CardContent> 
         {
-          cardData.tasks.length === 0 ?
+          tasks.length === 0 ?
           <h2>В вашей карточке пока пусто</h2> :
-          Object.values(cardData.tasks).map((task: ITask) => {
+          tasks.map((task: ITask) => { 
             return (
               <Task 
                 currentUser={currentUser}
@@ -48,6 +133,7 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder }) => {
                 key={task.taskID}
                 elementID={cardData.elementID}
                 taskData={task}
+                classBorder='board'
               />
             )
           })

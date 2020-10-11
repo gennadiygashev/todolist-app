@@ -2,8 +2,8 @@ import { IFolder } from './../folders/types';
 import { all, call, fork, put, select, takeEvery } from "redux-saga/effects"
 import { ActionType, IElement, ITask } from "./types"
 import Axios from '../../axios/axios'
-import { fetchData, fetchDataFailure, putData } from "./actions"
-import { getState } from "./reducer"
+import { fetchDataFailure, putData } from "./actions"
+import { getState } from "./reducer" 
 import { putFolders } from "../folders/actions"
 import { handleChange } from '../folders/sagas';
 
@@ -133,7 +133,7 @@ function* workerFetchData(action: any) {
         element.title, 
         element.tasks, 
         element.key, 
-        element.elementID)
+        element.elementID) 
       )
     })
 
@@ -293,7 +293,28 @@ function* workerDeleteTask(action: any) {
 }
 
 function* workerToggleTaskProps(action: any) {
-  yield call(handleToggleTaskProps, action.payload.currentUser, action.payload.taskData, action.payload.currentFolder, action.payload.elementID, action.payload.taskID, action.payload.typeAction)
+  let state = yield select(getState) 
+
+  const newTask = yield call(handleToggleTaskProps, action.payload.currentUser, action.payload.taskData, action.payload.currentFolder, action.payload.cardID, action.payload.taskID, action.payload.typeAction)
+  const idx = state.data.elements.findIndex((el: IElement) => el.elementID === action.payload.elementID)
+  const oldCard: IElement = state.data.elements[idx]
+  const taskIndex = oldCard.tasks.findIndex((el: ITask) => el.taskID === action.payload.taskID)
+
+  const newCard: IElement = {...oldCard,
+    'tasks': [
+      ...oldCard.tasks.slice(0, taskIndex),
+      newTask,
+      ...oldCard.tasks.slice(taskIndex + 1)
+    ]
+  }
+
+  const cards = [
+    ...state.data.elements.slice(0, idx),
+    newCard,
+    ...state.data.elements.slice(idx + 1)  
+  ]  
+
+  yield put(putData(cards))
 }
 
 

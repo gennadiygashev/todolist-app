@@ -5,6 +5,7 @@ import { deleteCard } from '../../../store/data/actions'
 
 import IconButton from '@material-ui/core/IconButton'
 import ClearIcon from '@material-ui/icons/Clear'
+import { Box, Typography } from '@material-ui/core'
 
 interface IDeleteCardProps {
   elementID: string,
@@ -20,10 +21,10 @@ type IDeleteCard = IDeleteCardProps & IDeleteCardDispatch
 
 const DeleteCard:React.FC<IDeleteCard> = ({ currentUser, elementID, currentFolder, deleteCard }) => {
   return (
-    <IconButton onClick={() => deleteCard(currentUser, currentFolder, elementID)}>
-      <ClearIcon />
-    </IconButton>
-  )
+    <Box onClick={() => deleteCard(currentUser, currentFolder, elementID)} style={{ display: 'flex', width: '100%'}}>
+      <ClearIcon style={{ marginRight: 7 }}/> <div>Удалить карточку</div>  
+    </Box>
+  ) 
 }
 
 const mapDispatchToProps = {

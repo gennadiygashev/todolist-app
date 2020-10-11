@@ -77,6 +77,7 @@ const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fe
                         key={task.taskID}
                         elementID={list.elementID}
                         taskData={task}
+                        classBorder='list'
                       />
                     )
                   })
