@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 
 import { deleteCard } from '../../../store/data/actions'
 
-import IconButton from '@material-ui/core/IconButton'
 import ClearIcon from '@material-ui/icons/Clear'
-import { Box, Typography } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 
 interface IDeleteCardProps {
   elementID: string,

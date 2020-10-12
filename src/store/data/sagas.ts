@@ -129,12 +129,12 @@ function* workerFetchData(action: any) {
     let data: any[] = []
 
     Object.values(response.data).map((element: any) => {
-      data.push(changeData(
+      return (data.push(changeData(
         element.title, 
         element.tasks, 
         element.key, 
         element.elementID) 
-      )
+      ))
     })
 
     if (response.error) {
@@ -295,7 +295,7 @@ function* workerDeleteTask(action: any) {
 function* workerToggleTaskProps(action: any) {
   let state = yield select(getState) 
 
-  const newTask = yield call(handleToggleTaskProps, action.payload.currentUser, action.payload.taskData, action.payload.currentFolder, action.payload.cardID, action.payload.taskID, action.payload.typeAction)
+  const newTask = yield call(handleToggleTaskProps, action.payload.currentUser, action.payload.taskData, action.payload.currentFolder, action.payload.elementID, action.payload.taskID, action.payload.typeAction)
   const idx = state.data.elements.findIndex((el: IElement) => el.elementID === action.payload.elementID)
   const oldCard: IElement = state.data.elements[idx]
   const taskIndex = oldCard.tasks.findIndex((el: ITask) => el.taskID === action.payload.taskID)

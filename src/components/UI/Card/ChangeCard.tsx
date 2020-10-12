@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { IElement } from '../../../store/data/types'
 import { changeCard } from '../../../store/data/actions'
 
-import { IconButton, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Box } from '@material-ui/core/'
+import { TextField, Dialog, DialogActions, DialogContent, DialogTitle, Button, Box } from '@material-ui/core/'
 import CreateIcon from '@material-ui/icons/Create'
 
 interface IChangeCardProps {
