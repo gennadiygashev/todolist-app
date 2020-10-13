@@ -7,9 +7,10 @@ import ClearIcon from '@material-ui/icons/Clear'
 import { Box } from '@material-ui/core'
 
 interface IDeleteCardProps {
-  elementID: string,
+  elementID: string
   currentFolder: string
   currentUser: string
+  cardLength: number
 }
 
 interface IDeleteCardDispatch {
@@ -18,9 +19,9 @@ interface IDeleteCardDispatch {
 
 type IDeleteCard = IDeleteCardProps & IDeleteCardDispatch
 
-const DeleteCard:React.FC<IDeleteCard> = ({ currentUser, elementID, currentFolder, deleteCard }) => {
+const DeleteCard:React.FC<IDeleteCard> = ({ currentUser, elementID, currentFolder, cardLength, deleteCard }) => {
   return (
-    <Box onClick={() => deleteCard(currentUser, currentFolder, elementID)} style={{ display: 'flex', width: '100%'}}>
+    <Box onClick={() => deleteCard(currentUser, currentFolder, elementID, cardLength)} style={{ display: 'flex', width: '100%'}}>
       <ClearIcon style={{ marginRight: 7 }}/> <div>Удалить карточку</div>  
     </Box>
   ) 

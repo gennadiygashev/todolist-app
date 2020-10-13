@@ -8,7 +8,6 @@ import EmptyMain from '../Empty/EmptyMain'
 
 import { IAppState } from '../../../../../store'
 import { IElement } from '../../../../../store/data/types'
-import { fetchData } from '../../../../../store/data/actions'
 
 import { compose, spacing, breakpoints, sizing, borders } from '@material-ui/system'
 import styled from 'styled-components'
@@ -28,17 +27,10 @@ interface IBoardState {
   cards: IElement[]
 }
 
-interface IBoardDispatch {
-  fetchData: typeof fetchData
-}
+type IBoard = IBoardProps & IBoardState 
 
-type IBoard = IBoardProps & IBoardState & IBoardDispatch
-
-const Board: React.FC<IBoard> = ({ currentUser, loading, cards, currentFolder, fetchData }) => {
-  useEffect(() => {
-    fetchData(currentUser, currentFolder)
-  }, [currentFolder])
-
+const Board: React.FC<IBoard> = ({ currentUser, loading, cards, currentFolder }) => {
+  
   if (loading === true) {
     return (
       <Box p={1} minWidth='100%' maxWidth='100%' minHeight='85vh' borderColor="paper">
@@ -100,9 +92,5 @@ const mapStateToProps = ({ data }: IAppState) => ({
   cards: data.elements
 })
 
-const mapDispatchToProps = {
-  fetchData: fetchData
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Board)
+export default connect(mapStateToProps)(Board)
 

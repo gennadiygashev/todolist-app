@@ -68,7 +68,7 @@ const ChangeFolder: React.FC<IChangeFolder> = ({ currentUser, folderData, delete
           <TextField
             margin="dense"
             id="name"
-            label="Изменить заголовок"
+            label="Заголовок"
             fullWidth
             defaultValue={folderData.name}
             onChange={changeTitleHandler}
@@ -76,7 +76,7 @@ const ChangeFolder: React.FC<IChangeFolder> = ({ currentUser, folderData, delete
           />
           <Divider className={classes.divider} />
           <FormControl component="fieldset"> 
-            <FormLabel component="legend">Изменить цвет папки</FormLabel>
+            <FormLabel component="legend">Цвет папки</FormLabel>
             <RadioGroup onChange={changeColorHandler}>
               <FormControlLabel value="action" control={
                 <Radio

@@ -16,6 +16,7 @@ async function handleDeleteCard(currentUser: string, currentFolder: string, elem
 }
 
 async function handleCreateCard(currentUser: string, currentFolder: string) {
+  console.log('handleCreateCard')
   const createCard = (): IElement => {
     return {
       title: 'Новая карточка',
@@ -164,9 +165,28 @@ function* workerDeleteCard(action: any) {
   ]
 
   yield put(putData(cards))
+
+  const folderIdx: number = state.folders.folders.findIndex((el: IFolder) => el.folderID === action.payload.currentFolder)
+  const oldFolder: IFolder = state.folders.folders[folderIdx]
+  const newLength: number = oldFolder.folderLength - action.payload.cardLength
+  
+  const newFolder: IFolder = {...oldFolder,
+    'folderLength': newLength
+  }
+  
+  const folders: IFolder[] = [
+    ...state.folders.folders.slice(0, folderIdx),
+    newFolder,
+    ...state.folders.folders.slice(folderIdx + 1)  
+  ]
+
+  yield put(putFolders(folders)) 
+
+  yield call(handleChange, action.payload.currentUser, newLength, action.payload.currentFolder, 'folderLength')
 }
 
 function* workerCreateCard(action: any) {
+  console.log('workerCreateCard')
   let state = yield select(getState)
 
   const newCard = yield call(handleCreateCard, action.payload.currentUser, action.payload.currentFolder)

@@ -7,7 +7,7 @@ import LoadCards from '../../../../UI/LoadCardsList'
 
 import { IAppState } from '../../../../../store'
 import { IElement, ITask } from '../../../../../store/data/types'
-import { addTask, fetchData } from '../../../../../store/data/actions'
+import { addTask } from '../../../../../store/data/actions'
 
 import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -32,18 +32,13 @@ interface IListState {
 }
 
 interface IListDispatch {
-  fetchData: typeof fetchData
   addTask: typeof addTask
 }
 
 type IListC = IListProps & IListState & IListDispatch
 
-const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fetchData, addTask }) => {
+const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, addTask }) => {
   const classes = useStyles()
-
-  useEffect(() => {
-    fetchData(currentUser, currentFolder)
-  }, [currentFolder])
 
   if (loading === true) {
     return (
@@ -114,9 +109,8 @@ const mapStateToProps = ({ data }: IAppState) => ({
   loading: data.loading,
   lists: data.elements
 })
-
+ 
 const mapDispatchToProps = {
-  fetchData: fetchData,
   addTask: addTask
 }
 

@@ -96,8 +96,8 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder, addTask 
   return (
     <Box style={{ minHeight: '90vh', height: '100%' }}>
       <CardHeader
-        title={cardData.title}
-        action={
+        title={cardData.title} 
+        action={ 
           <div>
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
               <MoreVertIcon />
@@ -122,6 +122,7 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder, addTask 
                   currentFolder={currentFolder}
                   currentUser={currentUser}
                   elementID={cardData.elementID}
+                  cardLength={cardData.tasks.length}
                 />
               </MenuItem>
               <MenuItem onClick={showTasksHandler} className={ classes.menuItem } >
