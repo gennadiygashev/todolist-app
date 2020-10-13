@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     demo: {
       backgroundColor: theme.palette.background.paper,
       paddingLeft: '20px',
-      paddingBottom: '20px'
+      paddingRight: '20px',
     },
     title: {
       margin: theme.spacing(4, 0, 2),

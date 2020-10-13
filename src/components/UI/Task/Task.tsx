@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
   label: {
     color: 'red'
   },
+  done: {
+    textDecoration: 'line-through',
+    opacity: .4
+  }, 
   board: {
     border: '1px solid rgba(0, 0, 0, 0.2)',
     marginBottom: 7,
@@ -93,7 +97,10 @@ const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskDat
       justify="space-between"
       alignItems="center"
       wrap='nowrap' 
-      className={classBorder === 'board' ? classes.board : classes.list}
+      className={`
+        ${classBorder === 'board' ? classes.board : classes.list}
+        ${check ? classes.done : ''}
+      `}
     >
       <Grid item>
         <StyledCheckbox
@@ -102,7 +109,7 @@ const Task: React.FC<ITaskC> = ({ currentUser, currentFolder, elementID, taskDat
               checked={taskData.done}
               id={taskData.taskID}
               onChange={() => changeCheckedHandler()}
-              color={taskData.important ? 'secondary' : 'primary'}
+              color={important ? 'secondary' : 'primary'}
             />
           }
           classes={{ label: 'checkBoxTitle' }} 

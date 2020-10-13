@@ -49,7 +49,13 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder, addTask 
 
   useEffect(() => {
     if (showCompletedTasks) {
-      setTasks(cardData.tasks)
+      setTasks(cardData.tasks.sort((prev) => {
+        if (prev.done === true) {
+          return 1
+        } else {
+          return -1
+        }
+      })) 
     } else {
       defaultTaskList()
       setTasks(defaultTaskList())
@@ -102,7 +108,6 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder, addTask 
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               transformOrigin={{ vertical: "top", horizontal: "right" }}
             >
               <MenuItem onClick={handleClose} className={ classes.menuItem } >
