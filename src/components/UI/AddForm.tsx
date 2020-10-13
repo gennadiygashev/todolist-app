@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
 
-import { addTask } from '../../../store/data/actions'
+import { addTask } from '../../store/data/actions'
+import { addFolder } from '../../store/folders/actions'
 
 import { TextField, Grid, IconButton } from '@material-ui/core/'
 import { makeStyles } from '@material-ui/core/styles'
@@ -16,19 +16,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-interface IAddTaskProps {
-  currentUser: string
-  currentFolder: string, 
-  elementID: string,
+interface IAddFormProps {
+  path: {
+    currentUser: string
+    currentFolder?: string
+    elementID?: string
+  }
+  addFunc: typeof addTask | typeof addFolder
 }
 
-interface IAddTaskDispatch {
-  addTask: typeof addTask
-}
-
-type IAddTask = IAddTaskProps & IAddTaskDispatch
-
-const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, elementID, addTask }) => {
+const AddForm: React.FC<IAddFormProps> = ({ path, addFunc }) => {
   const [title, setTitle] = useState('')
   const classes = useStyles()
 
@@ -38,7 +35,7 @@ const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, elementID, ad
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault()
-    addTask(currentUser, currentFolder, elementID, title)
+    addFunc(path, title)
     setTitle('')
   }
 
@@ -48,7 +45,7 @@ const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, elementID, ad
         <Grid item style={{ width: '100%' }}>
           <form onSubmit={onSubmit} style={{ display: 'flex', justifyContent: 'space-between' }}>
             <TextField 
-              id={`addTask${elementID}`} 
+              id={`addTask${path.elementID}`} 
               label='Добавить задачу'
               type="text" 
               onChange={onLabelChange}
@@ -67,9 +64,4 @@ const AddTask: React.FC<IAddTask> = ({ currentUser, currentFolder, elementID, ad
   )
 }
 
-const mapDispatchToProps = {
-  addTask: addTask
-}
-
-export default connect(null, mapDispatchToProps)(AddTask)
-
+export default AddForm

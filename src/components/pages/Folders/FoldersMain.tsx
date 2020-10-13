@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
 
-import AddFolder from '../../UI/Folder/AddFolder'
 import FoldersList from './FoldersList'
 
 import { IFolder } from '../../../store/folders/types';
@@ -9,6 +8,8 @@ import { IAppState } from '../../../store';
 
 import { CircularProgress, Grid, List, Typography } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import AddForm from '../../UI/AddForm';
+import { addFolder } from '../../../store/folders/actions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,10 +36,15 @@ interface IFoldersMainState {
   folders: IFolder[]
 }
 
-type IFoldersMain = IFoldersMainProps & IFoldersMainState
+interface IFoldersMainDispatch {
+  addFolder: typeof addFolder
+}
 
-const FoldersMain: React.FC<IFoldersMain> = ({ currentUser, loading, folders }) => {
-  const classes = useStyles();
+type IFoldersMain = IFoldersMainProps & IFoldersMainState & IFoldersMainDispatch
+
+const FoldersMain: React.FC<IFoldersMain> = ({ currentUser, loading, folders, addFolder }) => {
+  const classes = useStyles()
+
   return (
     <div className={classes.root}>
       <Grid container spacing={2} justify="center" alignItems="center">
@@ -53,7 +59,7 @@ const FoldersMain: React.FC<IFoldersMain> = ({ currentUser, loading, folders }) 
                 <CircularProgress /> :
                 <FoldersList folders={folders} />
               }
-              <AddFolder currentUser={currentUser} />
+              <AddForm path={{currentUser}} addFunc={addFolder} />
             </List>
           </div>
         </Grid>
@@ -62,9 +68,13 @@ const FoldersMain: React.FC<IFoldersMain> = ({ currentUser, loading, folders }) 
   )
 }
 
+const mapDispatchToProps = {
+  addFolder: addFolder
+}
+
 const mapStateToProps = ({ folders }: IAppState) => ({
   loading: folders.loading,
   folders: folders.folders,
 })
 
-export default connect(mapStateToProps)(FoldersMain)
+export default connect(mapStateToProps, mapDispatchToProps)(FoldersMain)

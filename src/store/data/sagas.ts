@@ -67,7 +67,7 @@ async function handleChangeCard(currentUser: string, currentFolder: string, elem
   Axios.patch(`/${currentUser}/data/${currentFolder}/${elementID}.json`, {'title': value})
 }
 
-async function handleCreateTask(currentUser: string, currentFolder: string, elementID: string, title: string) {
+async function handleCreateTask(path: any, title: string) {
   const createTask = (title: string): ITask => {
     return {
       title,
@@ -80,13 +80,13 @@ async function handleCreateTask(currentUser: string, currentFolder: string, elem
 
   const newTask: ITask = createTask(title)
   
-  const response = await Axios.post(`/${currentUser}/data/${currentFolder}/${elementID}/tasks.json`, newTask)
+  const response = await Axios.post(`/${path.currentUser}/data/${path.currentFolder}/${path.elementID}/tasks.json`, newTask)
   
   const taskID: any = Object.values(response.data)[0]
   newTask.key = taskID
   newTask.taskID = taskID
 
-  Axios.patch(`/${currentUser}/data/${currentFolder}/${elementID}/tasks/${taskID}.json`, {'key': taskID, 'taskID': taskID})
+  Axios.patch(`/${path.currentUser}/data/${path.currentFolder}/${path.elementID}/tasks/${taskID}.json`, {'key': taskID, 'taskID': taskID})
   
   return newTask
 }
@@ -213,13 +213,15 @@ function* workerChangeCard(action: any) {
 }
 
 function* workerCreateTask(action: any) {
+  const path = action.payload.path
+
   let state = yield select(getState)
 
-  const newTask: ITask = yield call(handleCreateTask, action.payload.currentUser, action.payload.currentFolder, action.payload.elementID, action.payload.title)
-  const idx = state.data.elements.findIndex((el: IElement) => el.elementID === action.payload.elementID)
+  const newTask: ITask = yield call(handleCreateTask, path, action.payload.title)
+  const idx = state.data.elements.findIndex((el: IElement) => el.elementID === path.elementID)
   const oldCard: IElement = state.data.elements[idx]
   
-  const newCard: IElement = {...oldCard,
+  const newCard: IElement = {...oldCard, 
     'tasks': [...oldCard.tasks, newTask]
   } 
 
@@ -231,7 +233,7 @@ function* workerCreateTask(action: any) {
 
   yield put(putData(cards))
 
-  const folderIdx = state.folders.folders.findIndex((el: IFolder) => el.folderID === action.payload.currentFolder)
+  const folderIdx = state.folders.folders.findIndex((el: IFolder) => el.folderID === path.currentFolder)
   const oldFolder: IFolder = state.folders.folders[folderIdx]
   const newLength: number = oldFolder.folderLength + 1
   
@@ -247,7 +249,7 @@ function* workerCreateTask(action: any) {
 
   yield put(putFolders(folders)) 
 
-  yield call(handleChange, action.payload.currentUser, newLength, action.payload.currentFolder, 'folderLength')
+  yield call(handleChange, path.currentUser, newLength, path.currentFolder, 'folderLength')
 }
  
 function* workerDeleteTask(action: any) {

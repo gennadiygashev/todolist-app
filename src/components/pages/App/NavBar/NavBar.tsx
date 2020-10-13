@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import AddFolder from '../../../UI/Folder/AddFolder'
 import Folder from '../../../UI/Folder/Folder'
+import AddForm from '../../../UI/AddForm'
 
 import { IAppState } from '../../../../store'
 import { IFolder } from '../../../../store/folders/types'
+import { addFolder } from '../../../../store/folders/actions'
 
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
@@ -100,9 +101,13 @@ interface INavBarState {
   folders: IFolder[]
 }
 
-type INavBar = INavBarProps & INavBarState 
+interface INavBarDispatch {
+  addFolder: typeof addFolder
+}
 
-const NavBar: React.FC<INavBar> = ({ folders, currentUser, currentFolderName }) => {
+type INavBar = INavBarProps & INavBarState & INavBarDispatch
+
+const NavBar: React.FC<INavBar> = ({ folders, currentUser, currentFolderName, addFolder}) => {
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
@@ -178,8 +183,9 @@ const NavBar: React.FC<INavBar> = ({ folders, currentUser, currentFolderName }) 
           <ListItem>
             <ListItemIcon style={{transform: 'translateX(4px)'}}><CreateNewFolderIcon /></ListItemIcon>
             <ListItemText primary={
-              <AddFolder 
-                currentUser={currentUser}
+              <AddForm
+                path={{currentUser}}
+                addFunc={addFolder}
               />       
             }/>
           </ListItem>
@@ -193,4 +199,8 @@ const mapStateToProps = ({ folders }: IAppState) => ({
   folders: folders.folders,
 })
 
-export default connect(mapStateToProps)(NavBar)
+const mapDispatchToProps = {
+  addFolder: addFolder
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

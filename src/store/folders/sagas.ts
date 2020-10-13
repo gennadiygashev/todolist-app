@@ -72,8 +72,11 @@ function* workerFetchFolders(action: any) {
 }
 
 function* workerCreateFolder(action: any) {
+  const currentUser = action.payload.path.currentUser
+
   let state = yield select(getState)
-  const newFolder: IFolder = yield call(handleCreate, action.payload.currentUser, action.payload.name)
+
+  const newFolder: IFolder = yield call(handleCreate, currentUser, action.payload.name)
   
   const folders: IFolder[] = [
     ...state.folders.folders,

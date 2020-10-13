@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 
-import AddTask from '../../../../UI/Task/AddTask'
 import DeleteCard from '../../../../UI/Card/DeleteCard'
 import ChangeCard from '../../../../UI/Card/ChangeCard'
 import Task from '../../../../UI/Task/Task'
+import AddForm from '../../../../UI/AddForm'
 
 import { IElement, ITask } from '../../../../../store/data/types'
+import { addTask } from '../../../../../store/data/actions'
 
 import { CardHeader, CardContent, Box, Menu, MenuItem, IconButton, makeStyles } from '@material-ui/core/'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   menuItem: {
     color: 'rgba(0, 0, 0, .7)', 
     paddingTop: 10,
@@ -23,13 +25,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-interface ICardC {
+interface ICardCProps {
   currentUser: string
   cardData: IElement
   currentFolder: string, 
 }
 
-const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder }) => {
+interface ICardCDispatch {
+  addTask: typeof addTask
+}
+
+type ICardC = ICardCProps & ICardCDispatch
+
+const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder, addTask }) => {
   const defaultTaskList = () => (
     cardData.tasks.filter(task => task.done !== true)  
   ) 
@@ -138,17 +146,24 @@ const Card: React.FC<ICardC> = ({ currentUser, cardData, currentFolder }) => {
             )
           })
         }
-        <AddTask 
-          currentUser={currentUser}
-          currentFolder={currentFolder}
-          elementID={cardData.elementID}
+        <AddForm
+          path={{
+            currentUser,
+            currentFolder,
+            elementID: cardData.elementID
+          }}
+          addFunc={addTask}
         />
       </CardContent>
     </Box> 
   )
 }
 
-export default Card
+const mapDispatchToProps = {
+  addTask: addTask
+}
+
+export default connect(null, mapDispatchToProps)(Card)
 
 
 

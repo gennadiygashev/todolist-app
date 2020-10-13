@@ -104,6 +104,5 @@ const mapDispatchToProps = {
   fetchData: fetchData
 }
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(Board)
 

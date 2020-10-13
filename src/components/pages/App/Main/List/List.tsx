@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import AddTask from '../../../../UI/Task/AddTask'
 import Task from '../../../../UI/Task/Task'
+import AddForm from '../../../../UI/AddForm'
+import LoadCards from '../../../../UI/LoadCardsList'
 
 import { IAppState } from '../../../../../store'
 import { IElement, ITask } from '../../../../../store/data/types'
+import { addTask, fetchData } from '../../../../../store/data/actions'
 
 import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import LoadCards from '../../../../UI/LoadCardsList'
-import { fetchData } from '../../../../../store/data/actions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,11 +33,12 @@ interface IListState {
 
 interface IListDispatch {
   fetchData: typeof fetchData
+  addTask: typeof addTask
 }
 
 type IListC = IListProps & IListState & IListDispatch
 
-const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fetchData }) => {
+const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fetchData, addTask }) => {
   const classes = useStyles()
 
   useEffect(() => {
@@ -84,10 +85,13 @@ const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fe
                 }
               </Grid>
               <Grid item>
-                <AddTask 
-                  currentUser={currentUser}
-                  currentFolder={currentFolder}
-                  elementID={list.elementID} 
+                <AddForm 
+                  path={{
+                    currentUser,
+                    currentFolder,
+                    elementID: list.elementID
+                  }}
+                  addFunc={addTask}
                 />
               </Grid>
             </Grid>
@@ -104,7 +108,8 @@ const mapStateToProps = ({ data }: IAppState) => ({
 })
 
 const mapDispatchToProps = {
-  fetchData: fetchData
+  fetchData: fetchData,
+  addTask: addTask
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(List)
