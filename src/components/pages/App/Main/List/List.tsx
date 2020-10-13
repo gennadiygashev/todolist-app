@@ -67,10 +67,18 @@ const List: React.FC<IListC> = ({ currentUser, currentFolder, lists, loading, fe
               key={list.elementID}
             >
               <Grid item>
-                {
+                { 
                   list.tasks.length === 0 ?
                   <h2>В списке пока нет задач</h2> :
-                  list.tasks.map((task: ITask) => {
+                  list.tasks
+                  .sort((prev) => {
+                    if (prev.done === true) {
+                      return 1
+                    } else {
+                      return -1
+                    }
+                  }) 
+                  .map((task: ITask) => {
                     return (
                       <Task 
                         currentUser={currentUser}
