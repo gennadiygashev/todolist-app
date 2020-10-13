@@ -32,16 +32,18 @@ const Folder: React.FC<IFolderProps> = ({ currentUser, folderData }) => {
       <ListItem button key={folderData.folderID} style={{
         justifyContent: 'space-between'
       }}>
-        <Link to={`/${folderData.typeData}/${folderData.folderID}`}>
-          <ListItemIcon style={{transform: 'translateX(4px)'}}>
-            { myFolderIcon(folderData) }
-          </ListItemIcon>
-        </Link>
-        <Link to={`/${folderData.typeData}/${folderData.folderID}`} style={{ color: 'rgba(0, 0, 0, 0.75)', textDecoration: 'none' }}>
-          <ListItemText primary={folderData.name} />
-        </Link>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Link to={`/${folderData.typeData}/${folderData.folderID}`}>
+            <ListItemIcon style={{transform: 'translateX(4px)'}}>
+              { myFolderIcon(folderData) }
+            </ListItemIcon>
+          </Link>
+          <Link to={`/${folderData.typeData}/${folderData.folderID}`} style={{ color: 'rgba(0, 0, 0, 0.75)', textDecoration: 'none'}}>
+            <ListItemText primary={folderData.name} />
+          </Link> 
+        </div>
         <ChangeFolder  
-          currentUser={currentUser}
+          currentUser={currentUser} 
           folderData={folderData}
         />
       </ListItem>
